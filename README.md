@@ -1,0 +1,2 @@
+# Lab3_ECE369a_FA26
+ECE 369a Lab 6 MIPS Routine
