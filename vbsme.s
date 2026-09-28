@@ -1,10 +1,12 @@
 #  Fall 2026
 #  Team Members:    
 #  % Effort    :   
-#
+#  Aidan Walker 50%
 # ECE369A,  
 # 
 
+
+# There is a VSCode ADDON for MIPS that helps- Way better than Notepad
 ########################################################################################################################
 ### data
 ########################################################################################################################
@@ -780,4 +782,36 @@ vbsme:
     li      $v1, 0
 
     # insert your code here
+   # so i have like no idea what to do 
+   # can we create like a skeleton of comments and then fill in the code later 
+
+
+
+   #TODOS given by AI so probably not correct but possibly an idea on what to do
    
+    # TODO 1: Read the four dimensions from the array at $a0:
+    #         frame rows, frame columns, window rows, window columns.
+
+
+    # TODO 2: Compute the last legal top-left row and column for the window.
+
+
+    # TODO 3: Visit every legal top-left position in the required circular
+    #         search order. Check the lab handout for the exact order.
+
+
+    # TODO 4: For each position, compare every window value with the matching
+    #         frame value. Each value is a word (4 bytes), and the frame row
+    #         stride is the frame column count.
+
+
+    # TODO 5: Add the absolute differences to get this position's SAD.
+
+
+    # TODO 6: If this SAD is strictly smaller than the best SAD so far, save
+    #         this position's row and column. Strict comparison keeps the
+    #         first position in the required search order when SADs tie.
+
+
+    # TODO 7: Return the best row in $v0 and best column in $v1.
+    #         Keep any values needed across loops in registers or on the stack.
