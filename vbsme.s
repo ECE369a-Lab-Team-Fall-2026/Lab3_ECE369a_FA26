@@ -785,6 +785,54 @@ vbsme:
    # so i have like no idea what to do 
    # can we create like a skeleton of comments and then fill in the code later 
 
+#                         Objective 1 Rules and Grading Requirements
+# you must follow the given search pattern
+# you are not allowed to use special registers in your implementation
+# "s" and "t" registers are the only registers to store values during the execution of
+# the program
+#  avoid the following commands: division, mod
+
+#                       Objective 1 Strategy: You should approach the problem with three tasks:
+# Task 1: implementation of the SAD subroutine that just computes the sum of absolute
+# difference for a given window size.
+# Task 2: implementation of the address generation for reading the corresponding frame
+# elements based on the current position in the frame.
+# Task 3: implementation of the search pattern move
+
+
+# Aidans Bs Explainations 
+
+# Ok so this is what the SAD routine does 
+    # it takes a Window, which is what we are going to compare against, smaller than the "frame" which we compare to
+    #   Ie you put the window in the frame
+    # Window  2x2                Frame  3x3
+    #   2  4                   1 2 3 
+    #   3  5                   3 4 5 
+    #                          5 6 7
+    # With this example we can compare the window to the frame 4 times, one on each corner
+    # ie                     (X's are ignored pieces)
+    #   2  4       compare     1 2 x 
+    #   3  5        with       3 4 x
+    #                          x x x
+
+    #   2  4       compare     x 2 4  
+    #   3  5        with       x 4 5
+    #                          x x x
+
+    #                          x x x 
+    #   2  4       compare     x 4 5 
+    #   3  5        with       x 6 7 
+
+    #                          x x x
+    #   2  4       compare     3 5 x
+    #   3  5        with       5 7 x
+    
+# to get it to follow the given pattern we should 
+    # Top left of matrix is 0,0 (start) needs to repeat the check for difference, then move to the right
+    #   move to the right until you reach end of frame which would be probable our $t variables 4 for each direction
+    #   we start at 0,0 but we need to have it go to the right until it hits where it already searched
+    #   so a variable that initializes as the frame size minus the window size+1, and then have it decrement as we move to a different 
+    #          direction so it wont go past the searched area
 
 
    #TODOS given by AI so probably not correct but possibly an idea on what to do
