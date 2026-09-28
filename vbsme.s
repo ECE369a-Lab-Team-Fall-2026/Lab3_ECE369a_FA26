@@ -2,6 +2,7 @@
 #  Team Members:    
 #  % Effort    :   
 #  Aidan Walker 50%
+# Merge Conflict 
 # ECE369A,  
 # 
 
@@ -835,9 +836,11 @@ vbsme:
     #          direction so it wont go past the searched area
 
 
+# 4 loops for each direction, and then a loop for the SAD calculation
+
    #TODOS given by AI so probably not correct but possibly an idea on what to do
    
-    # TODO 1: Read the four dimensions from the array at $a0:
+    # TODO 1: Read the four dimensions from the array at $s0:
     #         frame rows, frame columns, window rows, window columns.
 
 
