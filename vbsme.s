@@ -2,7 +2,11 @@
 #  Team Members: Sean Maloney, Aidan Walker
 #  % Effort    :   
 #  Aidan Walker 50%
+<<<<<<< HEAD
 #  Sean Maloney 50%
+=======
+# Merge Conflict 
+>>>>>>> 62aea68d92602a11c2796d4624ffd8b29c9bc98a
 # ECE369A,  
 # 
 
