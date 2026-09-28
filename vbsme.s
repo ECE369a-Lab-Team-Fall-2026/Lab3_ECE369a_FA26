@@ -1,7 +1,8 @@
 #  Fall 2026
-#  Team Members:    
+#  Team Members: Sean Maloney, Aidan Walker
 #  % Effort    :   
 #  Aidan Walker 50%
+#  Sean Maloney 50%
 # ECE369A,  
 # 
 
