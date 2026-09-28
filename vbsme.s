@@ -838,31 +838,37 @@ vbsme:
 
 # 4 loops for each direction, and then a loop for the SAD calculation
 
-   #TODOS given by AI so probably not correct but possibly an idea on what to do
-   
-    # TODO 1: Read the four dimensions from the array at $s0:
-    #         frame rows, frame columns, window rows, window columns.
+######################## Loop 1: Top Left to Top Right ###########################
+#
+#
+##################################################################################
 
 
-    # TODO 2: Compute the last legal top-left row and column for the window.
 
 
-    # TODO 3: Visit every legal top-left position in the required circular
-    #         search order. Check the lab handout for the exact order.
+######################## Loop 2: Top Right to Bottom Right 
+#
+#
+##########################################################
 
 
-    # TODO 4: For each position, compare every window value with the matching
-    #         frame value. Each value is a word (4 bytes), and the frame row
-    #         stride is the frame column count.
 
 
-    # TODO 5: Add the absolute differences to get this position's SAD.
+######################### Loop 3: Bottom Right to Bottom Left #######################
+#
+#
+####################################################################################
 
 
-    # TODO 6: If this SAD is strictly smaller than the best SAD so far, save
-    #         this position's row and column. Strict comparison keeps the
-    #         first position in the required search order when SADs tie.
+######################### Loop 4: Bottom Left to Top Left 
+#
+#
+##########################################################
 
 
-    # TODO 7: Return the best row in $v0 and best column in $v1.
-    #         Keep any values needed across loops in registers or on the stack.
+
+######################### SAD Calculation ########################################################
+#
+#
+#
+#
