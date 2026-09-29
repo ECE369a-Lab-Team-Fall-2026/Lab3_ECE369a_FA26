@@ -5,8 +5,6 @@
 #  Sean Maloney 50%
 # ECE369A,  
 # 
-
-
 # There is a VSCode ADDON for MIPS that helps- Way better than Notepad
 ########################################################################################################################
 ### data
