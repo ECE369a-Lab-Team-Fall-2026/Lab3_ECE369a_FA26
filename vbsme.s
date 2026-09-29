@@ -781,6 +781,10 @@ vbsme:
     li      $v1, 0
 
     # insert your code here
+
+
+
+
    # so i have like no idea what to do 
    # can we create like a skeleton of comments and then fill in the code later 
 
@@ -867,6 +871,11 @@ vbsme:
 
 ######################### SAD Calculation ########################################################
 #
-# take each number in window and compare it to the corresponding number in the frame, add the absolute difference to a sum
+#To read each number in a matrix we read row by row to get each number individually
 #
+#  $a0	Address of asize[0]. Words are [i, j, k, l] = frame rows, frame cols, window rows, window cols
+#  $a1	Address of frame[0][0] (row-major, 4 bytes per word)
+#  $a2	Address of window[0][0] (row-major)
 #
+#  $v0	Row of the best-match block's top-left corner
+#  $v1	Column of the best-match block's top-left corner
