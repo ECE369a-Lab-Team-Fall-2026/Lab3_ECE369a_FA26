@@ -869,6 +869,6 @@ vbsme:
 
 ######################### SAD Calculation ########################################################
 #
-#
+# take each number in window and compare it to the corresponding number in the frame, add the absolute difference to a sum
 #
 #
