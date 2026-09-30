@@ -887,34 +887,34 @@ right_end:
  
 
     # Loop 3: bottom row, right -> left
-    add     $t2, $s2, $zero
-    add     $t3, $t1, $zero
+    add     $t2, $s2, $zero  # starts at current bottom row
+    add     $t3, $t1, $zero  # while also starting at the current column
 bot_row:
-    jal     sad
-    beq     $t3, $t0, bot_end
-    addi    $t3, $t3, -1
+    jal     sad  # runs the calculation of the SAD for the current position in the frame
+    beq     $t3, $t0, bot_end  # if the current column is equal to the left column, then we are done with this row
+    addi    $t3, $t3, -1  # decrement counter of remaining columns to search 
     j       bot_row
 bot_end:
-    addi    $s2, $s2, -1        # bottom--
-    slt     $t8, $s2, $s7
-    bne     $t8, $zero, vb_done
+    addi    $s2, $s2, -1        # move the bottom row up by 1, so we can search the next row up
+    slt     $t8, $s2, $s7       # check if the bottom row is now less than the top row, if so we are done
+    bne     $t8, $zero, vb_done  #when t8=0 jump to done
  
- 
+
     # Loop 4: left column, bottom -> top
-    add     $t2, $s2, $zero
-    add     $t3, $t0, $zero
+    add     $t2, $s2, $zero  # starts at current bottom row
+    add     $t3, $t0, $zero  # while also starting at the current left column
 left_col:
-    jal     sad
-    beq     $t2, $s7, left_end
-    addi    $t2, $t2, -1
+    jal     sad 
+    beq     $t2, $s7, left_end # if the current row is equal to the top row, then end
+    addi    $t2, $t2, -1       #decrement counter of remaining rows to search
     j       left_col
 left_end:
-    addi    $t0, $t0, 1         # left++
+    addi    $t0, $t0, 1         #increment the left column by 1, so we can search the next column to the right
     j       Circle_search
  
 vb_done:
-    lw      $ra, 0($sp)
-    addi    $sp, $sp, 4
+    lw      $ra, 0($sp)   # restore return address
+    addi    $sp, $sp, 4   # restore stack pointer
     jr      $ra                 # $v0 = row, $v1 = col
 
 
