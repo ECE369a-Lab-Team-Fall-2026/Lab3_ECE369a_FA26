@@ -782,12 +782,6 @@ vbsme:
 
     # insert your code here
 
-
-
-
-   # so i have like no idea what to do 
-   # can we create like a skeleton of comments and then fill in the code later 
-
 #                         Objective 1 Rules and Grading Requirements
 # you must follow the given search pattern
 # you are not allowed to use special registers in your implementation
@@ -803,39 +797,48 @@ vbsme:
 # Task 3: implementation of the search pattern move
 
 
-# Aidans Bs Explainations 
 
-# Ok so this is what the SAD routine does 
-    # it takes a Window, which is what we are going to compare against, smaller than the "frame" which we compare to
-    #   Ie you put the window in the frame
-    # Window  2x2                Frame  3x3
-    #   2  4                   1 2 3 
-    #   3  5                   3 4 5 
-    #                          5 6 7
-    # With this example we can compare the window to the frame 4 times, one on each corner
-    # ie                     (X's are ignored pieces)
-    #   2  4       compare     1 2 x 
-    #   3  5        with       3 4 x
-    #                          x x x
+####################initializes EVERYTHING################
 
-    #   2  4       compare     x 2 4  
-    #   3  5        with       x 4 5
-    #                          x x x
+    add     $s0, $a1, $zero     # frame base
+    add     $s1, $a2, $zero     # window base
 
-    #                          x x x 
-    #   2  4       compare     x 4 5 
-    #   3  5        with       x 6 7 
+    lw      $s2, 0($a0)         # i (frame rows)   this accesses asize at different offsets to get the different values for the frame and window  stuff
+    lw      $s3, 4($a0)         # j (frame cols)       Words are [i, j, k, l] = frame rows, frame cols, window rows, window cols
+    lw      $s4, 8($a0)         # k (window rows)
+    lw      $s5, 12($a0)        # l (window cols)
 
-    #                          x x x
-    #   2  4       compare     3 5 x
-    #   3  5        with       5 7 x
-    
-# to get it to follow the given pattern we should 
-    # Top left of matrix is 0,0 (start) needs to repeat the check for difference, then move to the right
-    #   move to the right until you reach end of frame which would be probable our $t variables 4 for each direction
-    #   we start at 0,0 but we need to have it go to the right until it hits where it already searched
-    #   so a variable that initializes as the frame size minus the window size+1, and then have it decrement as we move to a different 
-    #          direction so it wont go past the searched area
+    sub     $t1, $s3, $s5       # right  = j - l  (last valid col)            this takes the frame collums and subtracts the window collums to get the last
+    #                                                                               collum that it is capable of searching, atleast in the initialization of the loops
+    sub     $s2, $s2, $s4       # bottom = i - k  (last valid row)
+
+    sll     $s3, $s3, 2         # stride = frame cols*4 bytes because each word is 4 bytes, this is used to calculate the address of the next row in the frame
+
+        # window end address = window base + k*l*4  (k*l by repeated add)
+
+    add     $t8, $zero, $zero
+    add     $t9, $s4, $zero
+multiplication_loop:                    # we cannot use multiplication or division like add or addi cause forbidden by lab rules 
+    beq     $t9, $zero, multip_done         # so this loop essentially does multiplication by adding over and over again.
+    add     $t8, $t8, $s5                    # this is doing the the window rows * collums to find the
+    addi    $t9, $t9, -1                       # total number of elements in window ie a 4x4 matrix has 16 elements
+    j       multiplication_loop
+multip_done:
+    sll     $t8, $t8, 2                    # this essentially multiplies by 4 to find the final address as it is 4 bytes per word
+    add     $s4, $s1, $t8                         # $s4 = window end address ( where the window ends in memory, this is used to know when to stop reading the window)
+ 
+    li      $s6, 0x7fffffff     # this creates the max possible number 2 billion something, because we want to find smaller numbers so init as largest
+
+    add     $s7, $zero, $zero   # top  = 0      initialize the top left corner of the frame to 0,0
+    add     $t0, $zero, $zero   # left = 0
+
+
+   # so i have like no idea what to do 
+   # can we create like a skeleton of comments and then fill in the code later 
+
+
+
+
 
 
 # 4 loops for each direction, and then a loop for the SAD calculation
@@ -882,36 +885,41 @@ vbsme:
 
 
 
-####################initializes EVERYTHING################
 
-    add     $s0, $a1, $zero     # frame base
-    add     $s1, $a2, $zero     # window base
 
-    lw      $s2, 0($a0)         # i (frame rows)   this accesses asize at different offsets to get the different values for the frame and window  stuff
-    lw      $s3, 4($a0)         # j (frame cols)       Words are [i, j, k, l] = frame rows, frame cols, window rows, window cols
-    lw      $s4, 8($a0)         # k (window rows)
-    lw      $s5, 12($a0)        # l (window cols)
 
-    sub     $t1, $s3, $s5       # right  = j - l  (last valid col)            this takes the frame collums and subtracts the window collums to get the last
-    #                                                                               collum that it is capable of searching, atleast in the initialization of the loops
-    sub     $s2, $s2, $s4       # bottom = i - k  (last valid row)
 
-    sll     $s3, $s3, 2         # stride = frame cols*4 bytes because each word is 4 bytes, this is used to calculate the address of the next row in the frame
 
-        # window end address = window base + k*l*4  (k*l by repeated add)
+# Aidans Bs Explainations 
 
-    add     $t8, $zero, $zero
-    add     $t9, $s4, $zero
-multiplication_loop:                    # we cannot use multiplication or division like add or addi cause forbidden by lab rules 
-    beq     $t9, $zero, multip_done         # so this loop essentially does multiplication by adding over and over again.
-    add     $t8, $t8, $s5                    # this is doing the the window rows * collums to find the
-    addi    $t9, $t9, -1                       # total number of elements in window ie a 4x4 matrix has 16 elements
-    j       multiplication_loop
-multip_done:
-    sll     $t8, $t8, 2                    # this essentially multiplies by 4 to find the final address as it is 4 bytes per word
-    add     $s4, $s1, $t8                         # $s4 = window end address ( where the window ends in memory, this is used to know when to stop reading the window)
- 
-    li      $s6, 0x7fffffff     # this creates the max possible number 2 billion something, because we want to find smaller numbers so init as largest
+# Ok so this is what the SAD routine does 
+    # it takes a Window, which is what we are going to compare against, smaller than the "frame" which we compare to
+    #   Ie you put the window in the frame
+    # Window  2x2                Frame  3x3
+    #   2  4                   1 2 3 
+    #   3  5                   3 4 5 
+    #                          5 6 7
+    # With this example we can compare the window to the frame 4 times, one on each corner
+    # ie                     (X's are ignored pieces)
+    #   2  4       compare     1 2 x 
+    #   3  5        with       3 4 x
+    #                          x x x
 
-    add     $s7, $zero, $zero   # top  = 0      initialize the top left corner of the frame to 0,0
-    add     $t0, $zero, $zero   # left = 0
+    #   2  4       compare     x 2 4  
+    #   3  5        with       x 4 5
+    #                          x x x
+
+    #                          x x x 
+    #   2  4       compare     x 4 5 
+    #   3  5        with       x 6 7 
+
+    #                          x x x
+    #   2  4       compare     3 5 x
+    #   3  5        with       5 7 x
+    
+# to get it to follow the given pattern we should 
+    # Top left of matrix is 0,0 (start) needs to repeat the check for difference, then move to the right
+    #   move to the right until you reach end of frame which would be probable our $t variables 4 for each direction
+    #   we start at 0,0 but we need to have it go to the right until it hits where it already searched
+    #   so a variable that initializes as the frame size minus the window size+1, and then have it decrement as we move to a different 
+    #          direction so it wont go past the searched area
