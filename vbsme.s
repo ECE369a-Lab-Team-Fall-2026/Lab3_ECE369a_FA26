@@ -778,9 +778,7 @@ print_result:
 
 
 # Begin subroutine
-vbsme:  
-    li      $v0, 0              # reset $v0 and $V1
-    li      $v1, 0
+
 
     # insert your code here
    # so i have like no idea what to do 
@@ -800,164 +798,367 @@ vbsme:
 # elements based on the current position in the frame.
 # Task 3: implementation of the search pattern move
 
-##### Register Usage ########
-#$t0 = frame rows
-#$t1 = frame columns
-#$t2 = window rows
-#$t3 = window columns
-
-#$t4 = current search row
-#$t5 = current search column
-
-#$t6 = window row
-#$t7 = window column
-
-#$t8 = current SAD
-#$t9 = best SAD
-
-#$a1 = frame base address
-#$a2 = window base address
+# REGISTER USAGE
     
-#$s0 = layer
-#$s1 = maximum possible row
-#$s2 = maximum possible column
+    # $t0 = frame rows
+    # $t1 = frame columns
+    # $t2 = window rows
+    # $t3 = window columns
+    # $t4 = current search row
+    # $t5 = current search column
+    # $t6 = window row
+    # $t7 = window column
+    # $t8 = current SAD
+    # $t9 = best SAD
+    # $s0 = layer
+    # $s1 = maximum possible row
+    # $s2 = maximum possible column
+    # $s3 = best row
+    # $s4 = best column
+    # $s5 = SAD/frame scratch
+    # $s6 = SAD/window scratch
+    # $s7 = SAD scratch
+    # $v0 = final best row
+    # $v1 = final best column
 
-#$s3 = best row
-#$s4 = best column
+vbsme:
 
-#$s5 = SAD/frame scratch
-#$s6 = SAD/window scratch
-#$s7 = SAD scratch
+    addi $v0, $zero, 0           # reset $v0
+    addi $v1, $zero, 0           # reset $v1
 
-#$v0 = best row
-#$v1 = best column
+    # LOAD DIMENSIONS
+    lw   $t0, 0($a0)             # frame rows
+    lw   $t1, 4($a0)             # frame columns
+    lw   $t2, 8($a0)             # window rows
+    lw   $t3, 12($a0)            # window columns
 
-######################## Loop 1: Top Left to Top Right ###########################
-lw $s0 , 0($a0)          # Load frame rows
-lw $s1 , 4($a0)          # Load frame columns
-lw $t2 , 8($a0)          # Load window rows
-lw $t3 , 12($a0)         # Load window columns
+    # CALCULATE SEARCH LIMITS
+    
+    sub  $s1, $t0, $t2           # maxRow = frame rows - window rows
+    sub  $s2, $t1, $t3           # maxCol = frame cols - window cols
 
+    addi $s0, $zero, 0            # layer = 0
 
+    # INITIAL SEARCH POSITION
 
-sub $s1 ,$t0, $t2          # Calculate max search column = frame columns - window columns
-sub $s0 ,$t1, $t3          # Calculate max search row = frame rows - window rows
-addi $s0, $zero, 0          # Initialize best row to 0
+    addi $t4, $zero, 0            # current search row = 0
+    addi $t5, $zero, 0            # current search column = 0
 
+    # FIRST SAD
+    # Calculate SAD at position (0,0)
 
-addi $t4, $zero, 0          # Initialize current search row to 0
-addi $t5, $zero, 0          # Initialize current search column to 0
+    j SAD_START
 
-J SAD_START
+FIRST_SAD_DONE:
 
-FIRST_SAD_DONE: 
-    add $t9, $t8, $zero          # Initialize best SAD to current SAD
+    # The first SAD becomes our initial best SAD
+    add  $t9, $t8, $zero           # best SAD = current SAD
 
-    add $s3, $t4, $zero          # Initialize best row to current search row
-    add $s4, $t5, $zero          # Initialize best column to current search column
-################################################################################
+    # The first position becomes our initial best position
+    add  $s3, $t4, $zero           # best row = current row
+    add  $s4, $t5, $zero           # best column = current column
 
-######################## Loop 2: Top Right to Bottom Right 
+    # LOOP 1: TOP LEFT -> TOP RIGHT
 
-
-##########################################################
-
-
-
-
-######################### Loop 3: Bottom Right to Bottom Left #######################
-#
-#
-####################################################################################
+    # Start one position to the right of (0,0)
+    add  $t4, $s0, $zero            # current row = layer
+    addi $t5, $s0, 1                # current column = layer + 1
 
 
-######################### Loop 4: Bottom Left to Top Left 
-#
-#
-##########################################################
+TOP_RIGHT_LOOP:
+
+    # right boundary = maxCol - layer
+    sub  $s7, $s2, $s0
+
+    # Check if current column > right boundary
+    slt  $s6, $s7, $t5
+    bne  $s6, $zero, TOP_RIGHT_DONE
+
+
+    # ------------------------------------------------------------
+    # SAD CALCULATION GOES HERE
+    # ------------------------------------------------------------
+
+
+    # ------------------------------------------------------------
+    # COMPARE CURRENT SAD WITH BEST SAD
+    # ------------------------------------------------------------
+
+    slt  $s7, $t8, $t9
+    beq  $s7, $zero, NOT_BETTER_TOP
+
+
+    # Current SAD is better
+    add  $t9, $t8, $zero           # best SAD = current SAD
+    add  $s3, $t4, $zero            # best row = current row
+    add  $s4, $t5, $zero            # best column = current column
+
+
+NOT_BETTER_TOP:
+
+    # Move one position to the right
+    addi $t5, $t5, 1
+
+    j TOP_RIGHT_LOOP
+
+
+TOP_RIGHT_DONE:
+
+
+    # ============================================================
+    # LOOP 2:
+    # TOP RIGHT -> BOTTOM RIGHT
+    # ============================================================
+
+    # Move to right edge
+    sub  $t5, $s2, $s0
+
+    # Start one row below the top-right corner
+    addi $t4, $s0, 1
+
+
+RIGHT_DOWN_LOOP:
+
+    # bottom boundary = maxRow - layer
+    sub  $s7, $s1, $s0
+
+    # Check if current row > bottom boundary
+    slt  $s6, $s7, $t4
+    bne  $s6, $zero, RIGHT_DOWN_DONE
+
+
+    # ------------------------------------------------------------
+    # SAD CALCULATION GOES HERE
+    # ------------------------------------------------------------
 
 
 
-######################### SAD Calculation ########################################################
+    # ------------------------------------------------------------
+    # COMPARE CURRENT SAD WITH BEST SAD
+    # ------------------------------------------------------------
+
+    slt  $s7, $t8, $t9
+    beq  $s7, $zero, NOT_BETTER_DOWN
+
+
+    # Current SAD is better
+    add  $t9, $t8, $zero
+    add  $s3, $t4, $zero
+    add  $s4, $t5, $zero
+
+
+NOT_BETTER_DOWN:
+
+    # Move one position down
+    addi $t4, $t4, 1
+
+    j RIGHT_DOWN_LOOP
+
+
+RIGHT_DOWN_DONE:
+
+
+    # ============================================================
+    # LOOP 3:
+    # BOTTOM RIGHT -> BOTTOM LEFT
+    # ============================================================
+
+    # Move to bottom-right corner
+    sub  $t4, $s1, $s0
+    sub  $t5, $s2, $s0
+
+    # Start one position to the left
+    addi $t5, $t5, -1
+
+
+BOTTOM_LEFT_LOOP:
+
+    # left boundary = layer
+    slt  $s6, $t5, $s0
+    bne  $s6, $zero, BOTTOM_LEFT_DONE
+
+
+    # ------------------------------------------------------------
+    # SAD CALCULATION GOES HERE
+    # ------------------------------------------------------------
+
+
+    # ------------------------------------------------------------
+    # COMPARE CURRENT SAD WITH BEST SAD
+    # ------------------------------------------------------------
+
+    slt  $s7, $t8, $t9
+    beq  $s7, $zero, NOT_BETTER_LEFT
+
+
+    # Current SAD is better
+    add  $t9, $t8, $zero
+    add  $s3, $t4, $zero
+    add  $s4, $t5, $zero
+
+
+NOT_BETTER_LEFT:
+
+    # Move one position to the left
+    addi $t5, $t5, -1
+
+    j BOTTOM_LEFT_LOOP
+
+
+BOTTOM_LEFT_DONE:
+
+
+    # ============================================================
+    # LOOP 4:
+    # BOTTOM LEFT -> TOP LEFT
+    # ============================================================
+
+    # Move to bottom-left corner
+    add  $t5, $s0, $zero
+    sub  $t4, $s1, $s0
+
+    # Start one position above
+    addi $t4, $t4, -1
+
+
+TOP_LEFT_LOOP:
+
+    # Check if current row < top boundary
+    slt  $s6, $t4, $s0
+    bne  $s6, $zero, TOP_LEFT_DONE
+
+
+    # ------------------------------------------------------------
+    # SAD CALCULATION GOES HERE
+    # ------------------------------------------------------------
+
+
+    # ------------------------------------------------------------
+    # COMPARE CURRENT SAD WITH BEST SAD
+    # ------------------------------------------------------------
+
+    slt  $s7, $t8, $t9
+    beq  $s7, $zero, NOT_BETTER_UP
+
+
+    # Current SAD is better
+    add  $t9, $t8, $zero
+    add  $s3, $t4, $zero
+    add  $s4, $t5, $zero
+
+
+NOT_BETTER_UP:
+
+    # Move one position up
+    addi $t4, $t4, -1
+
+    j TOP_LEFT_LOOP
+
+
+TOP_LEFT_DONE:
+
+
+
+# SAD CALCULATION
 
 SAD_START:
 
-addi $t8, $zero, 0          # Initialize current SAD to 0 
-addi $t6, $zero, 0          # Initialize window row index to 0 
+    addi $t8, $zero, 0             # current SAD = 0
+    addi $t6, $zero, 0             # window row = 0
 
-#Outer loop for window rows
-ROW_LOOP: 
-    slt $s2, $t6, $t2  # Check if window row index < window rows
-    beq $s2, $zero, SAD_DONE  # If window row index >= window rows, exit outer loop
-    addi $t7, $zero, 0          # Initialize window column index to 0 
-#Inner loop for window columns 
-COLUMN_LOOP: 
-    slt $s7, $t7, $t3  # Check if window column index < window columns
-    beq $s7, $zero, NEXT_ROW  # If window column index >= window columns, exit inner loop
+ROW_LOOP:
 
-    #Frame Address Calculation 
-    #Actual fram row = current search row + window row index
-    add $s7, $t4, $t6
-    #Actual frame column = current search column + window column index
-    mul $s7, $t7, $t1
+    # Check if window row < window rows
+    slt  $s7, $t6, $t2
+    beq  $s7, $zero, SAD_DONE
 
-    #Convert frame row and column to linear address 
-    add $s7, $s7, $t5
-    add $s7, $s7, $t7
+    # Start at window column 0
+    addi $t7, $zero, 0
 
-    #Convert element index into byte offset (4 bytes per word)
-    sll $s7, $s7, 2
+COLUMN_LOOP:
 
-    #Add frame base address
-    add $s7, $a1, $s7
+    # Check if window column < window columns
+    slt  $s7, $t7, $t3
+    beq  $s7, $zero, NEXT_ROW
 
-    #Load frame value
-    lw $s5, 0($s7)
+    # FRAME ADDRESS CALCULATION
 
-    #Window Address Calculation
-    #Convert window row and column to linear address
-    mul $s7, $t6, $t3
-    add $s7, $s7, $t7
+    # Actual frame row =
+    # current search row + window row
+    add  $s7, $t4, $t6
 
-    #Convert element index into byte offset (4 bytes per word)
-    sll $s7, $s7, 2
+    # Multiply row by number of frame columns
+    mul  $s7, $s7, $t1
 
-  #Add window base address
-    add $s7, $a2, $s7
+    # Add current search column
+    add  $s7, $s7, $t5
 
-    #Load window value
-    lw $s6, 0($s7)
+    # Add window column
+    add  $s7, $s7, $t7
 
-    # Calculate absolute difference
-    sub $s5, $s5, $s6
-    slt $s7, $s5, $zero  # Check if difference is negative
-    beq $s7, $zero, ADD_DIFF  # If not negative, skip making positive
+    # Convert element index to byte offset
+    sll  $s7, $s7, 2
 
-    sub $s5, $zero, $s5  # Make difference positive
+    # Add frame base address
+    add  $s7, $a1, $s7
+
+    # Load frame value
+    lw   $s5, 0($s7)
+
+    # WINDOW ADDRESS CALCULATION
+
+    # window row * window columns
+    mul  $s7, $t6, $t3
+
+    # Add window column
+    add  $s7, $s7, $t7
+
+    # Convert element index to byte offset
+    sll  $s7, $s7, 2
+
+    # Add window base address
+    add  $s7, $a2, $s7
+
+    # Load window value
+    lw   $s6, 0($s7)
+
+    # ABSOLUTE DIFFERENCE
+
+    # frame value - window value
+    sub  $s5, $s5, $s6
+
+    # Check if difference is negative
+    slt  $s7, $s5, $zero
+    beq  $s7, $zero, ADD_DIFF
+
+    # Make negative difference positive
+    sub  $s5, $zero, $s5
+
 
 ADD_DIFF:
-    add $t8, $t8, $s5  # Add to current SAD
 
-    addi $t6, $t6, 1  # Increment window column index
+    # Add absolute difference to SAD
+    add  $t8, $t8, $s5
+
+    # Move to next window column
+    addi $t7, $t7, 1
+
     j COLUMN_LOOP
 
+
 NEXT_ROW:
-    addi $t6, $t6, 1  # Increment window row index
+
+    # Move to next window row
+    addi $t6, $t6, 1
+
     j ROW_LOOP
 
+
 SAD_DONE:
-    #$t8 now contains the current SAD value
 
-slt $s2, $t8, $t9          # Check if current SAD < best SAD
-beq $s2, $zero, NOT_BEST  # If current SAD >= best SAD, skip updating
+    # $t8 now contains the complete SAD
 
-
-add $t9, $t8, $zero          # Initialize best SAD to current SAD
-add $v0, $t4, $zero          # Initialize best row to current search row
-add $v1, $t5, $zero          # Initialize best column to current search
-
-NOT_BEST:
-    addi $t5, $t5, 1          # Move to the next column (right)
-    
+    # For the first SAD, initialize the best values
+    j FIRST_SAD_DONE
 
 
