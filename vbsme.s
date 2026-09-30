@@ -799,6 +799,8 @@ vbsme:
 
 
 ####################initializes EVERYTHING################
+    addi    $sp, $sp, -4        # save $ra (we call sad with jal)
+    sw      $ra, 0($sp)
 
     add     $s0, $a1, $zero     # frame base
     add     $s1, $a2, $zero     # window base
@@ -831,7 +833,9 @@ multip_done:
     sll     $t8, $t8, 2                    # this essentially multiplies by 4 to find the final address as it is 4 bytes per word
     add     $s4, $s1, $t8                         # $s4 = window end address ( where the window ends in memory, this is used to know when to stop reading the window)
  
-    li      $s6, 0x7fffffff     # this creates the max possible number 2 billion something, because we want to find smaller numbers so init as largest
+    ori     $s6, $zero, 0x7fff  # $s6 = 0x00007fff
+    sll     $s6, $s6, 16        # $s6 = 0x7fff0000    # had to do this different cause li is a hi lo reg thingy and AI said it wasnt allowed by the ruberic
+    ori     $s6, $s6, 0xffff    # $s6 = 0x7fffffff    # this creates the max possible number 2 billion something, because we want to find smaller numbers so init as largest
 
     add     $s7, $zero, $zero   # top  = 0      initialize the top left corner of the frame to 0,0
     add     $t0, $zero, $zero   # left = 0
@@ -850,11 +854,71 @@ multip_done:
 
 
 
+######################## Just a test, ###########################
 
+spiral:
+    slt     $t8, $s2, $s7       # bottom < top ?
+    bne     $t8, $zero, vb_done
+    slt     $t8, $t1, $t0       # right < left ?
+    bne     $t8, $zero, vb_done
+ 
+    # Loop 1: top row, left -> right
+    add     $t2, $s7, $zero
+    add     $t3, $t0, $zero
+top_row:
+    jal     sad
+    beq     $t3, $t1, top_end
+    addi    $t3, $t3, 1
+    j       top_row
+top_end:
+    addi    $s7, $s7, 1         # top++
+    slt     $t8, $s2, $s7
+    bne     $t8, $zero, vb_done
+ 
+    # Loop 2: right column, top -> bottom
+    add     $t2, $s7, $zero
+    add     $t3, $t1, $zero
+right_col:
+    jal     sad
+    beq     $t2, $s2, right_end
+    addi    $t2, $t2, 1
+    j       right_col
+right_end:
+    addi    $t1, $t1, -1        # right--
+    slt     $t8, $t1, $t0
+    bne     $t8, $zero, vb_done
+ 
+    # Loop 3: bottom row, right -> left
+    add     $t2, $s2, $zero
+    add     $t3, $t1, $zero
+bot_row:
+    jal     sad
+    beq     $t3, $t0, bot_end
+    addi    $t3, $t3, -1
+    j       bot_row
+bot_end:
+    addi    $s2, $s2, -1        # bottom--
+    slt     $t8, $s2, $s7
+    bne     $t8, $zero, vb_done
+ 
+    # Loop 4: left column, bottom -> top
+    add     $t2, $s2, $zero
+    add     $t3, $t0, $zero
+left_col:
+    jal     sad
+    beq     $t2, $s7, left_end
+    addi    $t2, $t2, -1
+    j       left_col
+left_end:
+    addi    $t0, $t0, 1         # left++
+    j       spiral
+ 
+vb_done:
+    lw      $ra, 0($sp)
+    addi    $sp, $sp, 4
+    jr      $ra                 # $v0 = row, $v1 = col
 
-
-
-
+######################## Just a test, ###########################
 
 
 
@@ -874,7 +938,7 @@ multip_done:
 
 
 #  $v1	Column of the best-match block's top-left corner
-SAD:# CALL THIS EVERY TIME YOU WANT TO CALCULATE THE SAD FOR A GIVEN POSITION IN THE FRAME
+sad:# CALL THIS EVERY TIME YOU WANT TO CALCULATE THE SAD FOR A GIVEN POSITION IN THE FRAME
     # $s0 = frame base
     # $s1 = window base
     # $s2 = bottom (last valid row)
@@ -894,12 +958,12 @@ SAD:# CALL THIS EVERY TIME YOU WANT TO CALCULATE THE SAD FOR A GIVEN POSITION IN
   #add them all up
     #be done with it 
 
-# PART 1: ADDRESS GENERATION (Task 2 from the handout)
+
     # The frame is stored as one flat list of words, so the element at    (row, col) lives at:
     #       frame base + row * stride + col * 4
     # We can't use mul (it uses the banned HI/LO registers), so we build
     # row * stride by adding the stride to the pointer "row" times.
-    # ------------------------------------------------------------------
+
     add     $t4, $s0, $zero     # frame pointer starts at the frame base
     add     $t6, $t2, $zero     # counter = row (how many rows to skip down)
 
@@ -918,7 +982,47 @@ addr_done:
                                     # the window's top-left corner
 
 
+#------------Reset Window, Column Counter, and Sum ----------------
+add     $t5, $s1, $zero     # window pointer = first window element
+add     $t6, $s5, $zero     # column counter = l
+add     $t7, $zero, $zero   # sum = 0
+#------------------------------------------------------------------
 
+#------------Now find difference between objects in window and frame----------------
+Sum_loop:
+    lw      $t8, 0($t4)         # frame element
+    lw      $t9, 0($t5)         # window element
+    sub     $t8, $t8, $t9       # frame - window
+    bgez    $t8, sad_pos        # already >= 0? skip the negate
+    sub     $t8, $zero, $t8     # otherwise negate to get |diff|
+sad_pos:
+    add     $t7, $t7, $t8       # sum += |diff|
+    addi    $t4, $t4, 4         # next frame word
+    addi    $t5, $t5, 4         # next window word
+    addi    $t6, $t6, -1        # one fewer column left
+    bne     $t6, $zero, Sum_loop
+
+#------------------------------------------------------------------------------------
+
+#----------------------ROWS
+beq     $t5, $s4, sad_cmp   # window pointer at the end? go compare
+add     $t6, $s5, $zero     # reset column counter to l
+sll     $t9, $s5, 2         # l * 4 bytes
+sub     $t4, $t4, $t9       # back to start of this frame row
+add     $t4, $t4, $s3       # down one frame row
+j       Sum_loop            # read the next window row
+#------------------------------
+
+#_---------------------Compare the sum to the current min SAD--------------------------
+sad_cmp:
+    slt     $t8, $t7, $s6       # 1 if this SAD < current minimum
+    beq     $t8, $zero, sad_ret # not smaller? do nothing
+    add     $s6, $t7, $zero     # new minimum SAD
+    add     $v0, $t2, $zero     # save row
+    add     $v1, $t3, $zero     # save col
+
+sad_ret:
+    jr      $ra
 # Aidans Bs Explainations 
 
 # Ok so this is what the SAD routine does 
