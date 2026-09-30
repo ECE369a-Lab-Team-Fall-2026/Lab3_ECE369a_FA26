@@ -852,11 +852,7 @@ multip_done:
 
 # ($t2 = row, $t3 = col) i need these to be this for sad to work
 
-
-
-######################## Just a test, ###########################
-
-spiral:
+Circle_search:
     slt     $t8, $s2, $s7       # bottom < top ?
     bne     $t8, $zero, vb_done
     slt     $t8, $t1, $t0       # right < left ?
@@ -875,6 +871,7 @@ top_end:
     slt     $t8, $s2, $s7
     bne     $t8, $zero, vb_done
  
+
     # Loop 2: right column, top -> bottom
     add     $t2, $s7, $zero
     add     $t3, $t1, $zero
@@ -888,6 +885,7 @@ right_end:
     slt     $t8, $t1, $t0
     bne     $t8, $zero, vb_done
  
+
     # Loop 3: bottom row, right -> left
     add     $t2, $s2, $zero
     add     $t3, $t1, $zero
@@ -901,6 +899,7 @@ bot_end:
     slt     $t8, $s2, $s7
     bne     $t8, $zero, vb_done
  
+ 
     # Loop 4: left column, bottom -> top
     add     $t2, $s2, $zero
     add     $t3, $t0, $zero
@@ -911,14 +910,12 @@ left_col:
     j       left_col
 left_end:
     addi    $t0, $t0, 1         # left++
-    j       spiral
+    j       Circle_search
  
 vb_done:
     lw      $ra, 0($sp)
     addi    $sp, $sp, 4
     jr      $ra                 # $v0 = row, $v1 = col
-
-######################## Just a test, ###########################
 
 
 
