@@ -879,3 +879,20 @@ vbsme:
 #
 #  $v0	Row of the best-match block's top-left corner
 #  $v1	Column of the best-match block's top-left corner
+
+    add     $s0, $a1, $zero     # frame base
+    add     $s1, $a2, $zero     # window base
+
+    lw      $s7, 0($a0)         # i (frame rows)   this accesses asize at different offsets to get the different values for the frame and window  stuff
+    lw      $s2, 4($a0)         # j (frame cols)       Words are [i, j, k, l] = frame rows, frame cols, window rows, window cols
+    lw      $s3, 8($a0)         # k (window rows)
+    lw      $s4, 12($a0)        # l (window cols)
+
+    sub     $t1, $s2, $s4       # right  = j - l  (last valid col)            this takes the frame collums and subtracts the window collums to get the last
+    #                                                                               collum that it is capable of searching, atleast in the initialization of the loops
+    sub     $s7, $s7, $s3       # bottom = i - k  (last valid row)
+
+    sll     $s2, $s2, 2         # stride = frame cols*4 bytes because each word is 4 bytes, this is used to calculate the address of the next row in the frame
+
+
+    
