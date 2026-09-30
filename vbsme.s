@@ -853,35 +853,49 @@ multip_done:
 # ($t2 = row, $t3 = col) i need these to be this for sad to work
 
 Circle_search:
+    #Check if the current seach boundaries have been crossed, if so search is complete
     slt     $t8, $s2, $s7       # bottom < top ?
     bne     $t8, $zero, vb_done
     slt     $t8, $t1, $t0       # right < left ?
     bne     $t8, $zero, vb_done
  
-    # Loop 1: top row, left -> right
+    # Loop 1: traverse the top row from left to right
     add     $t2, $s7, $zero
     add     $t3, $t0, $zero
 top_row:
     jal     sad
+
+    #If the right boundary has been reached, exit the loop
     beq     $t3, $t1, top_end
+    #Increment the column index and continue traversing the top row
     addi    $t3, $t3, 1
     j       top_row
 top_end:
+    #Move the top boundary inward for the next side
     addi    $s7, $s7, 1         # top++
+
+    #Check whether the search boundaries have crossed after updating the top boundary
     slt     $t8, $s2, $s7
     bne     $t8, $zero, vb_done
  
 
-    # Loop 2: right column, top -> bottom
+    # Loop 2: traverse the right column from top to bottom
     add     $t2, $s7, $zero
     add     $t3, $t1, $zero
 right_col:
     jal     sad
+
+    #If the bottom boundary has been reached, exit the loop
     beq     $t2, $s2, right_end
+
+    #Move one position down
     addi    $t2, $t2, 1
     j       right_col
 right_end:
-    addi    $t1, $t1, -1        # right--
+    #Move the right boundary inward for the next side
+    addi    $t1, $t1, -1        
+
+    # Check whether the search boundaries have crossed.
     slt     $t8, $t1, $t0
     bne     $t8, $zero, vb_done
  
@@ -1020,7 +1034,6 @@ sad_cmp:
 
 sad_ret:
     jr      $ra
-# Aidans Bs Explainations 
 
 # Ok so this is what the SAD routine does 
     # it takes a Window, which is what we are going to compare against, smaller than the "frame" which we compare to
