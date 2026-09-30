@@ -816,6 +816,10 @@ vbsme:
 
         # window end address = window base + k*l*4  (k*l by repeated add)
 
+
+
+## finding the window end address, this is used to know when to stop reading the window, as we will be reading the window row by row
+
     add     $t8, $zero, $zero
     add     $t9, $s4, $zero
 multiplication_loop:                    # we cannot use multiplication or division like add or addi cause forbidden by lab rules 
@@ -832,9 +836,6 @@ multip_done:
     add     $s7, $zero, $zero   # top  = 0      initialize the top left corner of the frame to 0,0
     add     $t0, $zero, $zero   # left = 0
 
-
-   # so i have like no idea what to do 
-   # can we create like a skeleton of comments and then fill in the code later 
 
 
 
@@ -879,12 +880,33 @@ multip_done:
 #  $a0	Address of asize[0]. Words are [i, j, k, l] = frame rows, frame cols, window rows, window cols
 #  $a1	Address of frame[0][0] (row-major, 4 bytes per word)
 #  $a2	Address of window[0][0] (row-major)
-#
-#  $v0	Row of the best-match block's top-left corner
+#Task 1: implementation of the SAD subroutine that just computes the sum of absolute
+#      difference for a given window size.
+#  Task 2: implementation of the address generation for reading the corresponding frame
+#     e lements based on the current position in the frame.
+#  Task 3: implementation of the search pattern move
+#         $v0	Row of the best-match block's top-left corner
+
+
 #  $v1	Column of the best-match block's top-left corner
+SAD:# CALL THIS EVERY TIME YOU WANT TO CALCULATE THE SAD FOR A GIVEN POSITION IN THE FRAME
+    # $s0 = frame base
+    # $s1 = window base
+    # $s2 = bottom (last valid row)
+    # $s3 = stride (frame cols * 4)
+    # $s4 = window end address
+    # $s5 = window cols
+    # $s6 = current min SAD
+    # $s7 = top (current best row)
+    # $t0 = left (current best col)
+        #this auto fill thing very nice didnt write any of the $s stuff
 
-
-
+# ------ What to do in SAD
+    # probably reset sum of diff to 0
+    # now we need the two two we are comparing 
+    # compare them together over and over until we reach the end of the window, which is stored in $s4
+  #add them all up
+    #be done with it 
 
 
 
