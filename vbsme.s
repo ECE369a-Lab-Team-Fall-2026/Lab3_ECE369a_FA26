@@ -880,6 +880,10 @@ vbsme:
 #  $v0	Row of the best-match block's top-left corner
 #  $v1	Column of the best-match block's top-left corner
 
+
+
+####################initializes EVERYTHING################
+
     add     $s0, $a1, $zero     # frame base
     add     $s1, $a2, $zero     # window base
 
@@ -894,4 +898,20 @@ vbsme:
 
     sll     $s3, $s3, 2         # stride = frame cols*4 bytes because each word is 4 bytes, this is used to calculate the address of the next row in the frame
 
-    
+        # window end address = window base + k*l*4  (k*l by repeated add)
+
+    add     $t8, $zero, $zero
+    add     $t9, $s4, $zero
+multiplication_loop:                    # we cannot use multiplication or division like add or addi cause forbidden by lab rules 
+    beq     $t9, $zero, multip_done         # so this loop essentially does multiplication by adding over and over again.
+    add     $t8, $t8, $s5                    # this is doing the the window rows * collums to find the
+    addi    $t9, $t9, -1                       # total number of elements in window ie a 4x4 matrix has 16 elements
+    j       multiplication_loop
+multip_done:
+    sll     $t8, $t8, 2                    # this essentially multiplies by 4 to find the final address as it is 4 bytes per word
+    add     $s4, $s1, $t8                         # $s4 = window end address ( where the window ends in memory, this is used to know when to stop reading the window)
+ 
+    li      $s6, 0x7fffffff     # this creates the max possible number 2 billion something, because we want to find smaller numbers so init as largest
+
+    add     $s7, $zero, $zero   # top  = 0      initialize the top left corner of the frame to 0,0
+    add     $t0, $zero, $zero   # left = 0
