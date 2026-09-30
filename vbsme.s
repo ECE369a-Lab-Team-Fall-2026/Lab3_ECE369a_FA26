@@ -844,32 +844,17 @@ multip_done:
 
 # 4 loops for each direction, and then a loop for the SAD calculation
 
-######################## Loop 1: Top Left to Top Right ###########################
-#
-#
-##################################################################################
+######################## Circle Search Stuff, ###########################
+
+# ($t2 = row, $t3 = col) i need these to be this for sad to work
 
 
 
 
-######################## Loop 2: Top Right to Bottom Right 
-#
-#
-##########################################################
 
 
 
 
-######################### Loop 3: Bottom Right to Bottom Left #######################
-#
-#
-####################################################################################
-
-
-######################### Loop 4: Bottom Left to Top Left 
-#
-#
-##########################################################
 
 
 
@@ -902,13 +887,35 @@ SAD:# CALL THIS EVERY TIME YOU WANT TO CALCULATE THE SAD FOR A GIVEN POSITION IN
         #this auto fill thing very nice didnt write any of the $s stuff
 
 # ------ What to do in SAD
+# we have to know where we are in the frame, which is stored in $s7 and $t0
     # probably reset sum of diff to 0
     # now we need the two two we are comparing 
     # compare them together over and over until we reach the end of the window, which is stored in $s4
   #add them all up
     #be done with it 
 
+# PART 1: ADDRESS GENERATION (Task 2 from the handout)
+    # The frame is stored as one flat list of words, so the element at    (row, col) lives at:
+    #       frame base + row * stride + col * 4
+    # We can't use mul (it uses the banned HI/LO registers), so we build
+    # row * stride by adding the stride to the pointer "row" times.
+    # ------------------------------------------------------------------
+    add     $t4, $s0, $zero     # frame pointer starts at the frame base
+    add     $t6, $t2, $zero     # counter = row (how many rows to skip down)
 
+addr_loop: # THIS FINDS THE ADDRESS OF THE FRAME ELEMENT UNDER THE WINDOW'S TOP-LEFT CORNER
+
+    beq     $t6, $zero, addr_done   # once every row has been skipped, go to address done
+    add     $t4, $t4, $s3           # move down one frame row
+    addi    $t6, $t6, -1            # decrement the counter 
+    j       addr_loop               # repeat until st6 done
+ 
+addr_done:
+    # Now $t4 points at column 0 of the target row. Move right by "col"
+    # elements. Each element is 4 bytes, so shift col left by 2 (col*4).
+    sll     $t9, $t3, 2             # $t9 = col * 4 = byte offset in the row
+    add     $t4, $t4, $t9           # $t4 = address of the frame element under
+                                    # the window's top-left corner
 
 
 
