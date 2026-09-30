@@ -800,55 +800,66 @@ vbsme:
 # elements based on the current position in the frame.
 # Task 3: implementation of the search pattern move
 
+##### Register Usage ########
+#$t0 = frame rows
+#$t1 = frame columns
+#$t2 = window rows
+#$t3 = window columns
 
-# Aidans Bs Explainations 
+#$t4 = current search row
+#$t5 = current search column
 
-# Ok so this is what the SAD routine does 
-    # it takes a Window, which is what we are going to compare against, smaller than the "frame" which we compare to
-    #   Ie you put the window in the frame
-    # Window  2x2                Frame  3x3
-    #   2  4                   1 2 3 
-    #   3  5                   3 4 5 
-    #                          5 6 7
-    # With this example we can compare the window to the frame 4 times, one on each corner
-    # ie                     (X's are ignored pieces)
-    #   2  4       compare     1 2 x 
-    #   3  5        with       3 4 x
-    #                          x x x
+#$t6 = window row
+#$t7 = window column
 
-    #   2  4       compare     x 2 4  
-    #   3  5        with       x 4 5
-    #                          x x x
+#$t8 = current SAD
+#$t9 = best SAD
 
-    #                          x x x 
-    #   2  4       compare     x 4 5 
-    #   3  5        with       x 6 7 
-
-    #                          x x x
-    #   2  4       compare     3 5 x
-    #   3  5        with       5 7 x
+#$a1 = frame base address
+#$a2 = window base address
     
-# to get it to follow the given pattern we should 
-    # Top left of matrix is 0,0 (start) needs to repeat the check for difference, then move to the right
-    #   move to the right until you reach end of frame which would be probable our $t variables 4 for each direction
-    #   we start at 0,0 but we need to have it go to the right until it hits where it already searched
-    #   so a variable that initializes as the frame size minus the window size+1, and then have it decrement as we move to a different 
-    #          direction so it wont go past the searched area
+#$s0 = layer
+#$s1 = maximum possible row
+#$s2 = maximum possible column
 
+#$s3 = best row
+#$s4 = best column
 
-# 4 loops for each direction, and then a loop for the SAD calculation
+#$s5 = SAD/frame scratch
+#$s6 = SAD/window scratch
+#$s7 = SAD scratch
+
+#$v0 = best row
+#$v1 = best column
 
 ######################## Loop 1: Top Left to Top Right ###########################
-#
-#
-##################################################################################
+lw $s0 , 0($a0)          # Load frame rows
+lw $s1 , 4($a0)          # Load frame columns
+lw $t2 , 8($a0)          # Load window rows
+lw $t3 , 12($a0)         # Load window columns
 
 
 
+sub $s1 ,$t0, $t2          # Calculate max search column = frame columns - window columns
+sub $s0 ,$t1, $t3          # Calculate max search row = frame rows - window rows
+addi $s0, $zero, 0          # Initialize best row to 0
+
+
+addi $t4, $zero, 0          # Initialize current search row to 0
+addi $t5, $zero, 0          # Initialize current search column to 0
+
+J SAD_START
+
+FIRST_SAD_DONE: 
+    add $t9, $t8, $zero          # Initialize best SAD to current SAD
+
+    add $s3, $t4, $zero          # Initialize best row to current search row
+    add $s4, $t5, $zero          # Initialize best column to current search column
+################################################################################
 
 ######################## Loop 2: Top Right to Bottom Right 
-#
-#
+
+
 ##########################################################
 
 
@@ -868,7 +879,85 @@ vbsme:
 
 
 ######################### SAD Calculation ########################################################
-#
-#
-#
-#
+
+SAD_START:
+
+addi $t8, $zero, 0          # Initialize current SAD to 0 
+addi $t6, $zero, 0          # Initialize window row index to 0 
+
+#Outer loop for window rows
+ROW_LOOP: 
+    slt $s2, $t6, $t2  # Check if window row index < window rows
+    beq $s2, $zero, SAD_DONE  # If window row index >= window rows, exit outer loop
+    addi $t7, $zero, 0          # Initialize window column index to 0 
+#Inner loop for window columns 
+COLUMN_LOOP: 
+    slt $s7, $t7, $t3  # Check if window column index < window columns
+    beq $s7, $zero, NEXT_ROW  # If window column index >= window columns, exit inner loop
+
+    #Frame Address Calculation 
+    #Actual fram row = current search row + window row index
+    add $s7, $t4, $t6
+    #Actual frame column = current search column + window column index
+    mul $s7, $t7, $t1
+
+    #Convert frame row and column to linear address 
+    add $s7, $s7, $t5
+    add $s7, $s7, $t7
+
+    #Convert element index into byte offset (4 bytes per word)
+    sll $s7, $s7, 2
+
+    #Add frame base address
+    add $s7, $a1, $s7
+
+    #Load frame value
+    lw $s5, 0($s7)
+
+    #Window Address Calculation
+    #Convert window row and column to linear address
+    mul $s7, $t6, $t3
+    add $s7, $s7, $t7
+
+    #Convert element index into byte offset (4 bytes per word)
+    sll $s7, $s7, 2
+
+  #Add window base address
+    add $s7, $a2, $s7
+
+    #Load window value
+    lw $s6, 0($s7)
+
+    # Calculate absolute difference
+    sub $s5, $s5, $s6
+    slt $s7, $s5, $zero  # Check if difference is negative
+    beq $s7, $zero, ADD_DIFF  # If not negative, skip making positive
+
+    sub $s5, $zero, $s5  # Make difference positive
+
+ADD_DIFF:
+    add $t8, $t8, $s5  # Add to current SAD
+
+    addi $t6, $t6, 1  # Increment window column index
+    j COLUMN_LOOP
+
+NEXT_ROW:
+    addi $t6, $t6, 1  # Increment window row index
+    j ROW_LOOP
+
+SAD_DONE:
+    #$t8 now contains the current SAD value
+
+slt $s2, $t8, $t9          # Check if current SAD < best SAD
+beq $s2, $zero, NOT_BEST  # If current SAD >= best SAD, skip updating
+
+
+add $t9, $t8, $zero          # Initialize best SAD to current SAD
+add $v0, $t4, $zero          # Initialize best row to current search row
+add $v1, $t5, $zero          # Initialize best column to current search
+
+NOT_BEST:
+    addi $t5, $t5, 1          # Move to the next column (right)
+    
+
+
