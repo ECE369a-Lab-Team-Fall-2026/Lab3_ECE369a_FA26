@@ -6,8 +6,8 @@
 //
 //
 // Student(s) Name and Last Name: FILL IN YOUR INFO HERE!
-//
-//
+//Aidan Walker 50%
+//Sean Maloney 50%
 // Module - register_file.v
 // Description - Implements a register file with 32 32-Bit wide registers.
 //
@@ -51,5 +51,14 @@
 module RegisterFile(ReadRegister1, ReadRegister2, WriteRegister, WriteData, RegWrite, Clk, ReadData1, ReadData2);
 
 	/* Please fill in the implementation here... */
+	/*
+	STEP 1 Declair Inputs outputs
+	Step 2 Create Storage Arrays, declair as 0 initially (initial block)
+	Step 3 Write Logic Rising Edge
+	Step 4 Read Logic Falling Edge
+	
+	
+	*/
+	
 
 endmodule
