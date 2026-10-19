@@ -60,5 +60,47 @@ module RegisterFile(ReadRegister1, ReadRegister2, WriteRegister, WriteData, RegW
 	
 	*/
 	
+	    // ---------- Input Outputs ----------
+    input  [4:0]  ReadRegister1;
+    input  [4:0]  ReadRegister2;
+    input  [4:0]  WriteRegister;
+    input  [31:0] WriteData;
+    input         RegWrite;
+    input         Clk;
+
+    output reg [31:0] ReadData1;
+    output reg [31:0] ReadData2;
+    
+	    // ---------- Storage ----------
+    // TODO: declare 32 registers, each 32 bits wide
+     reg [31:0] registers [0:31];
+
+    // ---------- Initialization ----------
+integer i;
+    initial begin
+        // TODO: loop over all 32 registers and set them to 0
+        for (i=0;i<32;i=i+1)
+        registers[i]=0;
+        // (or to specific test values if your lab requires it)
+        // TODO: initialize ReadData1 and ReadData2 to 0
+        ReadData1=0;
+        ReadData2=0;
+
+    end
+
+    // ---------- Write (rising edge) ----------
+    always @(posedge Clk) begin
+        // TODO: if RegWrite is high AND WriteRegister is not 0,
+        //       write WriteData into the addressed register
+        if (RegWrite==1&&WriteRegister!=0)
+                registers[WriteRegister]<=WriteData;
+    end
+// ---------- Read (falling edge) ----------
+    always @(negedge Clk) begin
+        // TODO: ReadData1 <= register selected by ReadRegister1
+        ReadData1 <= registers[ReadRegister1];
+        // TODO: ReadData2 <= register selected by ReadRegister2
+        ReadData2 <= registers[ReadRegister2];
+    end
 
 endmodule
