@@ -36,6 +36,69 @@ module ALU32Bit(ALUControl, A, B, ALUResult, Zero);
 	output Zero;	    // Zero=1 if ALUResult == 0
 
     /* Please fill in the implementation here... */
+    //
+    //We need to do all of these cases
+    //
+    //   ____   | ADD       | add, addi, lw, lh, lb, sw, sh, sb (address calc)
+    //   ____   | SUB       | sub, beq, bne (Zero flag does the compare)
+    //   ____   | MUL       | mul
+    //   ____   | AND       | and, andi
+    //   ____   | OR        | or, ori
+    //   ____   | NOR       | nor   
+    //   ____   | XOR       | xor, xori
+    //   ____   | SLL       | sll
+    //   ____   | SRL       | srl
+    //   ____   | SLT       | slt, slti
+    //   ____   | ???       | bgez, bgtz, blez, bltz (see branch notes below)
+    //   ____   | PASS A    | jr (optional, if the ALU passes the register)
+    
+    // Arithmatic
+/*
+    ADD 
+    ADDI
+    SUB
+    Mul
+    
+*/
+    // Data
+/*
+    lw
+    sw
+    sb
+    lh
+    lb
+    sh
 
+*/
+    // Branch
+/*
+    BGEZ
+    BEQ
+    BNE
+    BGTZ
+    BLEZ
+    BLTZ
+    
+    J
+    JR
+    JAL
+
+*/
+    // Logical 
+/*
+    And
+    Andi
+    Or
+    Nor
+    xor
+    ori
+    xori
+    sll
+    srl
+    slt
+    slti
+
+*/
+    
 endmodule
 
