@@ -46,5 +46,42 @@ module DataMemory(Address, WriteData, Clk, MemWrite, MemRead, ReadData);
     output reg[31:0] ReadData; // Contents of memory location at Address
 
     /* Please fill in the implementation here */
+        // ---------- Storage ----------
+    // TODO: declare a 2D array of 1024 entries, each 32 bits wide
+    // (same idea as the register file array, just deeper)
+    reg [31:0] memory[0:1023];
+
+    // ---------- Initialization ----------
+    integer i;
+    initial begin
+        // TODO: loop over all 1024 entries and set them to 0 i guess
+        // (or load specific test values if your lab requires it)
+        for (i=0; i<1024; i=i+1)
+         memory[i]=0;
+    end
+
+    // ---------- Write (rising edge, clocked) ----------
+    always @(posedge Clk) begin
+        // TODO: if MemWrite is high,
+        //       write WriteData into the entry indexed by Address[11:2]
+        //       (remember: nonblocking assignment in a clocked block)
+        if (MemWrite==1)
+        memory[Address[11:2]] <= WriteData;
+    end
+
+    // ---------- Read (NOT clocked) ----------
+    // TODO: this block must be combinational, so the sensitivity list
+    //       should not include a clock edge (think @(*))
+    always @(*) begin
+        // TODO: if MemRead is high,
+        //       ReadData = entry indexed by Address[11:2]
+        if(MemRead==1)
+        ReadData = Address[11:2];
+        else
+        ReadData=32'h00000000;
+        // TODO: otherwise,
+        //       ReadData = 32'h00000000
+        // (remember: blocking assignment in a combinational block)
+    end
 
 endmodule
