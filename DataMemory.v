@@ -3,6 +3,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 // ECE369 - Computer Architecture
 // 
+//Aidan Walker 50%
+//Sean Maloney 50%
+//
 // Module - data_memory.v
 // Description - 32-Bit wide data memory.
 //
@@ -76,7 +79,7 @@ module DataMemory(Address, WriteData, Clk, MemWrite, MemRead, ReadData);
         // TODO: if MemRead is high,
         //       ReadData = entry indexed by Address[11:2]
         if(MemRead==1)
-        ReadData = Address[11:2];
+        ReadData = memory[Address[11:2]];
         else
         ReadData=32'h00000000;
         // TODO: otherwise,
