@@ -1,0 +1,15 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Wed Oct 28 19:21:05 2026
+# Process ID: 8964
+# Current directory: C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent5056 C:\Users\smalo\Documents\GitHub\Lab3_ECE369a_FA26\Lab3-369\Lab3-369.xpr
+# Log file: C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/vivado.log
+# Journal file: C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369\vivado.jou
+# Running On: SlimJim, OS: Windows, CPU Frequency: 2611 MHz, CPU Physical cores: 10, Host memory: 16995 MB
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.xpr
+update_compile_order -fileset sources_1
