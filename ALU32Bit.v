@@ -32,10 +32,42 @@ module ALU32Bit(ALUControl, A, B, ALUResult, Zero);
                                 // you need to adjust the bitwidth as needed
 	input [31:0] A, B;	    // inputs
 
-	output [31:0] ALUResult;	// answer
+	output reg [31:0] ALUResult;	// answer
 	output Zero;	    // Zero=1 if ALUResult == 0
 
     /* Please fill in the implementation here... */
+    //ALU Control Encoding
+    localparam ALU_AND = 4'b0000; // and , andi
+    localparam ALU_OR  = 4'b0001; // or, ori
+    localparam ALU_ADD = 4'b0010; // add, addi, lw, lh, lb, sw, sh, sb (address calc)
+    localparam ALU_XOR = 4'b0011; //xor, xori
+    localparam ALU_SLL = 4'b0100; // sll
+    localparam ALU_SRL = 4'b0101; // srl
+    localparam ALU_SUB = 4'b0110; // sub, beq, bne
+    localparam ALU_SLT = 4'b0111; // slt, slti
+    localparam ALU_MUL = 4'b1000; // mul (low 32 bits)
+    localparam ALU_PASSA = 4'b1001; //bgez, bgtz, blez, bltz, (Result = A)
+    localparam ALU_NOR = 4'b1100; ///nor
+    
+    always @(*) begin
+        case(ALUControl)
+            ALU_AND:   ALUResult = A & B;
+            ALU_OR:    ALUResult = A | B;
+            ALU_ADD:   ALUResult = A + B;
+            ALU_XOR:   ALUResult = A ^ B;
+            ALU_SLL:   ALUResult = B << A[4:0];
+            ALU_SRL:   ALUResult = B >> A[4:0];
+            ALU_SUB:   ALUResult = A - B;
+            ALU_SLT:   ALUResult = ($signed(A) < $signed(B)) ? 32'd1 : 32'd0;
+            ALU_MUL:   ALUResult = A * B;
+            ALU_PASSA: ALUResult = A;
+            ALU_NOR:   ALUResult = ~(A | B);
+            default:   ALUResult = 32'd0;
+        endcase
+    end
+    
+    assign  Zero = ALUResult == 32'd0;
+
 
 endmodule
 
