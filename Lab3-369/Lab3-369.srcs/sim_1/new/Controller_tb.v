@@ -20,14 +20,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Controller_tb(
-    reg opcode
-    reg funct
-    reg rt
-    
-    wire ReqWrite
-    wire RegDist
-    Controller u0(
-    
-     );
+module Controller_tb();
+
 endmodule
