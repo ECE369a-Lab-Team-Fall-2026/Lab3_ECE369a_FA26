@@ -6,7 +6,6 @@
 // Module - SignExtension_tb.v
 // Description - Test the sign extension module.
 ////////////////////////////////////////////////////////////////////////////////
-
 module SignExtension_tb();
 
     reg	[15:0] in;

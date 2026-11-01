@@ -22,16 +22,16 @@ module Mux32Bit2To1_tb();
         
 	initial begin
 
-        #100 inA <= 32'h00000001; inB <= 32'h00000002; sel <= 1'b0;
+        #100 inA = 32'h00000001; inB = 32'h00000002; sel = 1'b0;
         #20 $display("sel=%h, out=%h", sel, out);
 
-        #100 inA <= 32'h00000001; inB <= 32'h00000002; sel <= 1'b1;
+        #100 inA = 32'h00000001; inB = 32'h00000002; sel = 1'b1;
         #20 $display("sel=%h, out=%h", sel, out);
         
-        #100 inA <= 32'hF0000001; inB <= 32'hF0000002; sel <= 1'b0;
+        #100 inA = 32'hF0000001; inB = 32'hF0000002; sel = 1'b0;
         #20 $display("sel=%h, out=%h", sel, out);
 
-        #100 inA <= 32'hF0000001; inB <= 32'hF0000002; sel <= 1'b1;
+        #100 inA = 32'hF0000001; inB = 32'hF0000002; sel = 1'b1;
         #20 $display("sel=%h, out=%h", sel, out);
         
 	end
