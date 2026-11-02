@@ -315,6 +315,7 @@ module Controller(
                       
           ///// DET BLTZ AND BGEZ is done with
           OP_BZEROS: begin
+                SignExt = 1;
                 ALUControl = ALU_PASSA;
                 case (rt)
                     5'b00000: Branch = BR_BLTZ;

@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-
+ 
 ////////////////////////////////////////////////////////////////////////////////
 // ECE369 - Computer Architecture
 // 
@@ -37,9 +37,9 @@
 // bits help us index to one of the 4 bytes within a single word. therefore we only need bits [9-2] 
 // of the "Address" input to index any of the 256 words. 
 ////////////////////////////////////////////////////////////////////////////////
-
+ 
 module DataMemory(Address, WriteData, Clk, MemWrite, MemRead, MemSize ,ReadData); 
-
+ 
     input [31:0] Address; 	// Input Address 
     input [31:0] WriteData; // Data that needs to be written into the address 
     input Clk;
@@ -47,9 +47,9 @@ module DataMemory(Address, WriteData, Clk, MemWrite, MemRead, MemSize ,ReadData)
     input MemWrite; 		// Control signal for memory write 
     input MemRead; 			// Control signal for memory read 
     
-
+ 
     output reg[31:0] ReadData; // Contents of memory location at Address
-
+ 
     /* Please fill in the implementation here */
     
      // ---------- Size codes (match Controller.v) ----------
@@ -57,7 +57,7 @@ module DataMemory(Address, WriteData, Clk, MemWrite, MemRead, MemSize ,ReadData)
     localparam [1:0] SIZE_HALF = 2'b01;   // lh / sh
     localparam [1:0] SIZE_BYTE = 2'b10;   // lb / sb
     
-
+ 
     
         // ---------- Storage ----------
     // TODO: declare a 2D array of 1024 entries, each 32 bits wide
@@ -76,8 +76,8 @@ module DataMemory(Address, WriteData, Clk, MemWrite, MemRead, MemSize ,ReadData)
         // Then load the program's data (overwrites the zeros it covers)
         $readmemh("data_memory.mem", memory);
     end
-
-
+ 
+ 
     // ---------- Write (rising edge, clocked) ----------
     reg [31:0] merged; // to read existing, and change target
  
@@ -116,7 +116,7 @@ module DataMemory(Address, WriteData, Clk, MemWrite, MemRead, MemSize ,ReadData)
     // ---------- Read (NOT clocked) ----------
     // TODO: this block must be combinational, so the sensitivity list
     //       should not include a clock edge (think @(*))
-    reg [31:0] word;
+    wire [31:0] word = memory[old];   // word currently addressed (was never assigned)
     always @(*) begin
         // TODO: if MemRead is high,
         //       ReadData = entry indexed by Address[11:2]
@@ -142,6 +142,8 @@ module DataMemory(Address, WriteData, Clk, MemWrite, MemRead, MemSize ,ReadData)
  
                 default: ReadData = word;               // lw: whole word
             endcase
+        end else begin
+            ReadData = 32'h00000000;                    // no read: avoid a latch
         end
     end
 endmodule
