@@ -1,6 +1,9 @@
 `timescale 1ns / 1ps
 
 ////////////////////////////////////////////////////////////////////////////////
+// Aidan Walker 50%
+// Sean Maloney 50%
+
 // ECE369 - Computer Architecture
 // 
 // Module - ALU32Bit.v

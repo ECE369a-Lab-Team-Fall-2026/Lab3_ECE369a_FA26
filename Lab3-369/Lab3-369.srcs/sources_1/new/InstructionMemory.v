@@ -2,6 +2,10 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 // ECE369A - Computer Architecture
+//
+// Aidan Walker 50%
+// Sean Maloney 50%
+//
 // Laboratory  1
 // Module - InstructionMemory.v
 // Description - 32-Bit wide instruction memory.
@@ -42,20 +46,20 @@ module InstructionMemory(Address, Instruction);
 
     output reg [31:0] Instruction;    // Instruction at memory location Address
     
-      reg [31:0] memory [0:1023];         // at least 1024 instructions
-    //lab4 edit now 1024  words
-    
+    reg [31:0] memory [0:127];
     //creates 128 bit memory
         // this is to
     integer i;
     initial begin
-        for (i = 0; i < 1024; i = i + 1)
-            memory[i] = 32'h00000000;   // nop
-        $readmemh("instruction_memory.mem", memory);
-    end
+        for(i=0;i<128;i=i+1)
+        //for all of memory
+            memory[i]=i*3;
+            //make memory = index*3
+            end
+    //this is to initialize our memory or something along those lines
     
     always @(*) begin
-         Instruction = memory[Address[11:2]];
+         Instruction = memory[Address[8:2]];
          end
     // this puts our Address information from PCcounter (PCResult) 
     //into the memory and into the instruction

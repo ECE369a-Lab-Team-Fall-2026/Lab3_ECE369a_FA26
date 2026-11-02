@@ -1,6 +1,8 @@
 `timescale 1ns / 1ps
 
 ////////////////////////////////////////////////////////////////////////////////
+//Sean Maloney 50%
+// Aidan Walker 50%
 // ECE369A - Computer Architecture
 // Laboratory 1
 // Module - pc_register.v

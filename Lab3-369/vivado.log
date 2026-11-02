@@ -82,3 +82,5 @@ add_files C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.sr
 close [ open C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/EX_MEM.v w ]
 add_files C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/EX_MEM.v
 update_compile_order -fileset sources_1
+exit
+INFO: [Common 17-206] Exiting Vivado at Sun Nov  1 20:33:24 2026...
