@@ -1,8 +1,32 @@
 `timescale 1ns / 1ps
+<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////
 // ECE369 - Computer Architecture
 // Aidan Walker 50%
 // Sean Maloney 50%
+=======
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// Aidan Walker 50%
+// Sean Maloney 50%
+// 
+// Create Date: 10/31/2026 07:02:58 PM
+// Design Name: 
+// Module Name: Controller
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+>>>>>>> Sean's-Lab-4-and-5-additons
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -267,21 +291,25 @@ module Controller(
                     end
         /////////////////////////////BRANCHES///////////
             OP_BEQ: begin 
+                SignExt = 1;
                  ALUControl = ALU_SUB;
                  Branch = BR_BEQ;
                     end
                     
             OP_BNE: begin 
+                SignExt = 1;
                  ALUControl = ALU_SUB;
                  Branch = BR_BNE;
                     end
                     
-            OP_BLEZ: begin 
+            OP_BLEZ: begin
+                SignExt = 1; 
                 ALUControl = ALU_PASSA; 
                 Branch = BR_BLEZ; 
                       end
             
-            OP_BGTZ: begin 
+            OP_BGTZ: begin
+                SignExt = 1; 
                 ALUControl = ALU_PASSA; 
                 Branch = BR_BGTZ; 
                       end        
