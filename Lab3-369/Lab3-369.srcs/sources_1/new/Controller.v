@@ -2,6 +2,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
+// Aidan Walker 50%
+// Sean Maloney 50%
 // 
 // Create Date: 10/31/2026 07:02:58 PM
 // Design Name: 
@@ -281,21 +283,25 @@ module Controller(
                     end
         /////////////////////////////BRANCHES///////////
             OP_BEQ: begin 
+                SignExt = 1;
                  ALUControl = ALU_SUB;
                  Branch = BR_BEQ;
                     end
                     
             OP_BNE: begin 
+                SignExt = 1;
                  ALUControl = ALU_SUB;
                  Branch = BR_BNE;
                     end
                     
-            OP_BLEZ: begin 
+            OP_BLEZ: begin
+                SignExt = 1; 
                 ALUControl = ALU_PASSA; 
                 Branch = BR_BLEZ; 
                       end
             
-            OP_BGTZ: begin 
+            OP_BGTZ: begin
+                SignExt = 1; 
                 ALUControl = ALU_PASSA; 
                 Branch = BR_BGTZ; 
                       end        
