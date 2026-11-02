@@ -183,3 +183,7 @@ selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "SignExt
 // TclEventType: DG_GRAPH_STALE
 // [GUI Memory]: 147 MB (+924kb) [00:30:26]
 // HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 84 MB. Current time: 11/1/26, 6:51:30 PM MST
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
