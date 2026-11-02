@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Sun Nov  1 16:40:43 2026
+# Process ID: 19736
+# Current directory: C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.runs/synth_1
+# Command line: vivado.exe -log ALU32Bit.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source ALU32Bit.tcl
+# Log file: C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.runs/synth_1/ALU32Bit.vds
+# Journal file: C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.runs/synth_1\vivado.jou
+# Running On: Aidans-PC, OS: Windows, CPU Frequency: 3800 MHz, CPU Physical cores: 16, Host memory: 34139 MB
+#-----------------------------------------------------------
+source ALU32Bit.tcl -notrace

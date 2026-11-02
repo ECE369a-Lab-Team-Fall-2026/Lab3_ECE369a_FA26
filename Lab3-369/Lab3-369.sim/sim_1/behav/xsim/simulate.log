@@ -1,32 +1,37 @@
 Time resolution is 1 ps
-PASS               ADD A=00000005 B=00000007 -> 0000000c  Zero=0
-PASS          ADD wrap A=ffffffff B=00000001 -> 00000000  Zero=1
-PASS            SUB eq A=00000007 B=00000007 -> 00000000  Zero=1
-PASS           SUB neg A=00000005 B=00000007 -> fffffffe  Zero=0
-PASS               AND A=f0f0f0f0 B=ff00ff00 -> f000f000  Zero=0
-PASS          AND zero A=f0f0f0f0 B=0f0f0f0f -> 00000000  Zero=1
-PASS                OR A=f0f0f0f0 B=0f0f0f0f -> ffffffff  Zero=0
-PASS               XOR A=ffff0000 B=0000ffff -> ffffffff  Zero=0
-PASS          XOR same A=abcd1234 B=abcd1234 -> 00000000  Zero=1
-PASS               NOR A=00000000 B=00000000 -> ffffffff  Zero=0
-PASS          NOR zero A=f0f0f0f0 B=0f0f0f0f -> 00000000  Zero=1
-PASS          SLT -1<1 A=ffffffff B=00000001 -> 00000001  Zero=0
-PASS          SLT 1<-1 A=00000001 B=ffffffff -> 00000000  Zero=1
-PASS         SLT equal A=00000005 B=00000005 -> 00000000  Zero=1
-PASS           SLT 3<9 A=00000003 B=00000009 -> 00000001  Zero=0
-PASS             SLL 4 A=00000004 B=00000001 -> 00000010  Zero=0
-PASS            SLL 31 A=0000001f B=00000001 -> 80000000  Zero=0
-PASS             SLL 0 A=00000000 B=deadbeef -> deadbeef  Zero=0
-PASS             SRL 4 A=00000004 B=00000080 -> 00000008  Zero=0
-PASS            SRL 31 A=0000001f B=80000000 -> 00000001  Zero=0
-PASS         SRL logic A=00000004 B=f0000000 -> 0f000000  Zero=0
-PASS               MUL A=00000006 B=00000007 -> 0000002a  Zero=0
-PASS         MUL -1*-1 A=ffffffff B=ffffffff -> 00000001  Zero=0
-PASS        MUL ovflow A=00010000 B=00010000 -> 00000000  Zero=1
-PASS         PASSA neg A=fffffff0 B=deadbeef -> fffffff0  Zero=0
-PASS           PASSA 0 A=00000000 B=deadbeef -> 00000000  Zero=1
-PASS         PASSA pos A=00000005 B=deadbeef -> 00000005  Zero=0
-PASS           default A=12345678 B=9abcdef0 -> 00000000  Zero=1
-----------------------------------------
-Done: 28 passed, 0 failed
-$finish called at time : 280 ns : File "C:/github/Lab3_ECE369a_FA26/ALU32Bit_tb.v" Line 115
+PASS add 
+PASS sub 
+PASS and 
+PASS or  
+PASS xor 
+PASS nor 
+PASS slt 
+PASS sll 
+PASS srl 
+PASS jr  
+PASS nop 
+PASS mul 
+PASS addi
+PASS slti
+PASS andi
+PASS ori 
+PASS xori
+PASS lw  
+PASS lh  
+PASS lb  
+PASS sw  
+PASS sh  
+PASS sb  
+PASS beq 
+PASS bne 
+PASS blez
+PASS bgtz
+PASS bltz
+PASS bgez
+PASS j   
+PASS jal 
+PASS o_OPTest
+====================================
+ALL TESTS PASSED
+====================================
+$finish called at time : 320 ns : File "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sim_1/new/Controller_tb.v" Line 178
