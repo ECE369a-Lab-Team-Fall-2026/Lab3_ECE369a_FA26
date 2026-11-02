@@ -72,6 +72,7 @@ INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2022.2/data/ip'.
 open_project: Time (s): cpu = 00:00:33 ; elapsed = 00:00:13 . Memory (MB): peak = 1140.617 ; gain = 192.625
+<<<<<<< HEAD
 update_compile_order -fileset sources_1
 close [ open C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/ID_EX.v w ]
 add_files C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/ID_EX.v
@@ -84,3 +85,6 @@ add_files C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.sr
 update_compile_order -fileset sources_1
 exit
 INFO: [Common 17-206] Exiting Vivado at Sun Nov  1 20:33:24 2026...
+=======
+update_compile_order -fileset sources_1
+>>>>>>> Sean's-Lab-4-and-5-additons
