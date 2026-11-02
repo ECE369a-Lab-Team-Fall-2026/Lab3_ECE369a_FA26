@@ -4,11 +4,11 @@ Xilinx Vivado v2022.2 (64-bit) [Major: 2022, Minor: 2]
 SW Build: 3671981 on Fri Oct 14 05:00:03 MDT 2022
 IP Build: 3669848 on Fri Oct 14 08:30:02 MDT 2022
 
-Process ID (PID): 26392
+Process ID (PID): 24080
 License: Customer
 Mode: GUI Mode
 
-Current time: 	Mon Nov 02 00:02:19 MST 2026
+Current time: 	Mon Nov 02 00:09:55 MST 2026
 Time zone: 	Mountain Standard Time (America/Phoenix)
 
 OS: Windows 10
@@ -48,12 +48,12 @@ Vivado layouts directory: C:/Users/smalo/AppData/Roaming/Xilinx/Vivado/2022.2/da
 PlanAhead jar file: 	C:/Xilinx/Vivado/2022.2/lib/classes/planAhead.jar
 Vivado log file: 	C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/vivado.log
 Vivado journal file: 	C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/vivado.jou
-Engine tmp dir: 	C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/.Xil/Vivado-26392-SlimJim
+Engine tmp dir: 	C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/.Xil/Vivado-24080-SlimJim
 
 Xilinx Environment Variables
 ----------------------------
 RDI_APPROOT: C:/Xilinx/Vivado/2022.2
-RDI_ARGS:  -gui_launcher_event rodinguilauncherevent15012 "C:\Users\smalo\Documents\GitHub\Lab3_ECE369a_FA26\Lab3-369\Lab3-369.xpr"
+RDI_ARGS:  -gui_launcher_event rodinguilauncherevent14428 "C:\Users\smalo\Documents\GitHub\Lab3_ECE369a_FA26\Lab3-369\Lab3-369.xpr"
 RDI_ARGS_FUNCTION: RDI_EXEC_DEFAULT
 RDI_BASEROOT: C:/Xilinx/Vivado
 RDI_BINDIR: C:/Xilinx/Vivado/2022.2/bin
@@ -96,7 +96,7 @@ _RDI_CWD: C:\Users\smalo\Documents\GitHub\Lab3_ECE369a_FA26\Lab3-369
 
 GUI allocated memory:	256 MB
 GUI max memory:		3,072 MB
-Engine allocated memory: 829 MB
+Engine allocated memory: 855 MB
 
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 
@@ -109,7 +109,7 @@ Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 // TclEventType: DEBUG_PROBE_SET_CHANGE
 // TclEventType: FLOW_ADDED
 // Tcl Message: open_project C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.xpr 
-// HMemoryUtils.trashcanNow. Engine heap size: 877 MB. GUI used memory: 77 MB. Current time: 11/2/26, 12:02:20 AM MST
+// HMemoryUtils.trashcanNow. Engine heap size: 859 MB. GUI used memory: 76 MB. Current time: 11/2/26, 12:09:56 AM MST
 // TclEventType: MSGMGR_MOVEMSG
 // TclEventType: FILE_SET_CHANGE
 // TclEventType: FILE_SET_NEW
@@ -132,67 +132,62 @@ Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 // TclEventType: PROJECT_DASHBOARD_GADGET_NEW
 // TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
 // TclEventType: PROJECT_NEW
-// [GUI Memory]: 103 MB (+105548kb) [00:00:17]
-// [Engine Memory]: 974 MB (+869620kb) [00:00:17]
-// [GUI Memory]: 108 MB (+293kb) [00:00:18]
-// WARNING: HEventQueue.dispatchEvent() is taking  3126 ms.
+// [GUI Memory]: 100 MB (+102331kb) [00:00:14]
+// [Engine Memory]: 963 MB (+857991kb) [00:00:14]
+// WARNING: HEventQueue.dispatchEvent() is taking  2703 ms.
 // Tcl Message: open_project C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.xpr 
-// Tcl Message: INFO: [Project 1-313] Project file moved from 'C:/github/Lab3_ECE369a_FA26/Lab3-369' since last save. INFO: [filemgmt 56-3] Default IP Output Path : Could not find the directory 'C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.gen/sources_1'. 
+// Tcl Message: INFO: [filemgmt 56-3] Default IP Output Path : Could not find the directory 'C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.gen/sources_1'. 
 // Tcl Message: Scanning sources... Finished scanning sources 
 // Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1704] No user IP repositories specified INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2022.2/data/ip'. 
-// [GUI Memory]: 124 MB (+10528kb) [00:00:19]
-// Tcl Message: open_project: Time (s): cpu = 00:00:22 ; elapsed = 00:00:10 . Memory (MB): peak = 1131.492 ; gain = 299.562 
+// [GUI Memory]: 120 MB (+15261kb) [00:00:15]
+// Tcl Message: open_project: Time (s): cpu = 00:00:21 ; elapsed = 00:00:09 . Memory (MB): peak = 1117.742 ; gain = 275.574 
+// [GUI Memory]: 127 MB (+1793kb) [00:00:16]
+// [Engine Memory]: 1,016 MB (+5447kb) [00:00:16]
 // Project name: Lab3-369; location: C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369; part: xc7a100tcsg324-1
 dismissDialog("Open Project"); // bq
-// [GUI Memory]: 138 MB (+7799kb) [00:00:23]
-// Elapsed time: 23 seconds
-selectTab((HResource) null, (HResource) null, "Tcl Console", 0); // aa
-setText(RDIResource.CommandsInput_TYPE_TCL_COMMAND_HERE, (String) null); // h.a
-// Tcl Command: 'set d [get_property DIRECTORY [current_project]]; add_files -norecurse $d/Lab3-369.srcs/sources_1/new/ClkDiv.v $d/Lab3-369.srcs/sources_1/new/SevenSegment.v $d/Lab3-369.srcs/sources_1/new/Two4DigitDisplay.v $d/Lab3-369.srcs/sources_1/new/Top_Wrapper.v; add_files -fileset constrs_1 -norecurse $d/Nexyx7D...'
-// Tcl Command: 'set d [get_property DIRECTORY [current_project]]'
-// Tcl Command: 'add_files -norecurse $d/Lab3-369.srcs/sources_1/new/ClkDiv.v $d/Lab3-369.srcs/sources_1/new/SevenSegment.v $d/Lab3-369.srcs/sources_1/new/Two4DigitDisplay.v $d/Lab3-369.srcs/sources_1/new/Top_Wrapper.v'
-// TclEventType: DG_GRAPH_STALE
+// Elapsed time: 10 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Simulation, Run Simulation]", 10, false); // f
+// Elapsed time: 13 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 20, false); // f
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+selectButton(RDIResource.BaseDialog_YES, "Yes"); // a
+dismissDialog("Synthesis is Out-of-date"); // u
+// TclEventType: RUN_MODIFY
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+// Tcl Message: reset_run synth_1 
+// Tcl Message: INFO: [Project 1-1161] Replacing file C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/utils_1/imports/synth_1/ALU32Bit_tb.dcp with file C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.runs/synth_1/Top.dcp 
 // TclEventType: FILE_SET_CHANGE
-// Tcl Command: 'add_files -fileset constrs_1 -norecurse $d/Nexyx7DDR_MASTER.xdc'
-// TclEventType: FILE_SET_CHANGE
-// Tcl Command: 'update_compile_order -fileset sources_1'
-// Tcl Message: set d [get_property DIRECTORY [current_project]] 
-// Tcl Message: C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369 
-// Tcl Message: add_files -norecurse $d/Lab3-369.srcs/sources_1/new/ClkDiv.v $d/Lab3-369.srcs/sources_1/new/SevenSegment.v $d/Lab3-369.srcs/sources_1/new/Two4DigitDisplay.v $d/Lab3-369.srcs/sources_1/new/Top_Wrapper.v 
-// Tcl Message: C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/ClkDiv.v C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/SevenSegment.v C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/Two4DigitDisplay.v C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/Top_Wrapper.v 
-// Tcl Message: add_files -fileset constrs_1 -norecurse $d/Nexyx7DDR_MASTER.xdc 
-// Tcl Message: C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Nexyx7DDR_MASTER.xdc 
-// Tcl Message: update_compile_order -fileset sources_1 
-// Tcl Message: INFO: [Vivado 12-3458] The update_compile_order command is not intended for use in the GUI, where compile order updates occur based on project changes and the hierarchy update settings. No update performed. 
-// Elapsed time: 16 seconds
-selectMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // ag
-dismissMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // ag
-selectMenu(PAResourceItoN.MainMenuMgr_EDIT, "Edit"); // ag
-dismissMenu(PAResourceItoN.MainMenuMgr_EDIT, "Edit"); // ag
-selectMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // ag
-dismissMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // ag
-selectMenu(PAResourceItoN.MainMenuMgr_EDIT, "Edit"); // ag
-dismissMenu(PAResourceItoN.MainMenuMgr_EDIT, "Edit"); // ag
-selectMenu(PAResourceItoN.MainMenuMgr_VIEW, "View"); // ag
-dismissMenu(PAResourceItoN.MainMenuMgr_VIEW, "View"); // ag
-selectMenu(PAResourceItoN.MainMenuMgr_HELP, "Help"); // ag
-dismissMenu(PAResourceItoN.MainMenuMgr_HELP, "Help"); // ag
-selectMenu(RDIResource.MainWinMenuMgr_LAYOUT, "Layout"); // ag
-selectMenu(PAResourceItoN.MainMenuMgr_EDIT, "Edit"); // ag
-dismissMenu(PAResourceItoN.MainMenuMgr_EDIT, "Edit"); // ag
-selectMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // ag
-selectMenu(PAResourceItoN.MainMenuMgr_PROJECT, "Project"); // al
-dismissMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // ag
-selectMenu(PAResourceItoN.MainMenuMgr_TOOLS, "Tools"); // ag
-selectMenu(PAResourceItoN.MainMenuMgr_WINDOW, "Window"); // ag
-dismissMenu(PAResourceItoN.MainMenuMgr_WINDOW, "Window"); // ag
-selectMenu(RDIResource.MainWinMenuMgr_LAYOUT, "Layout"); // ag
-dismissMenu(RDIResource.MainWinMenuMgr_LAYOUT, "Layout"); // ag
-selectMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // ag
-dismissMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // ag
-selectMenu(PAResourceItoN.MainMenuMgr_EDIT, "Edit"); // ag
-dismissMenu(PAResourceItoN.MainMenuMgr_EDIT, "Edit"); // ag
-selectMenu(RDIResource.MainWinMenuMgr_LAYOUT, "Layout"); // ag
-dismissMenu(RDIResource.MainWinMenuMgr_LAYOUT, "Layout"); // ag
-setText(RDIResource.CommandsInput_TYPE_TCL_COMMAND_HERE, (String) null); // h.a
-// [GUI Memory]: 147 MB (+2482kb) [00:02:59]
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a
+// 'cw' command handler elapsed time: 7 seconds
+dismissDialog("Launch Runs"); // cz
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// [GUI Memory]: 140 MB (+6641kb) [00:00:48]
+// TclEventType: RUN_MODIFY
+// TclEventType: RUN_STATUS_CHANGE
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 6 
+// Tcl Message: [Mon Nov  2 00:10:34 2026] Launched synth_1... Run output will be captured here: C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.runs/synth_1/runme.log [Mon Nov  2 00:10:34 2026] Launched impl_1... Run output will be captured here: C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.runs/impl_1/runme.log 
+// TclEventType: RUN_STATUS_CHANGE
+dismissDialog("Generate Bitstream"); // bq
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_FAILED
+// TclEventType: RUN_STATUS_CHANGE
+// [GUI Memory]: 148 MB (+578kb) [00:03:21]
+// Elapsed time: 154 seconds
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a
+// Run Command: PAResourceCommand.PACommandNames_LOG_WINDOW
+dismissDialog("Bitstream Generation Failed"); // S.a
+// Elapsed time: 12 seconds
+selectButton(PAResourceQtoS.RunGadget_SHOW_ERROR, "3 errors"); // g
+// Run Command: PAResourceCommand.PACommandNames_MESSAGE_WINDOW
+// Elapsed time: 10 seconds
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, (String) null, 4, false); // u.d
