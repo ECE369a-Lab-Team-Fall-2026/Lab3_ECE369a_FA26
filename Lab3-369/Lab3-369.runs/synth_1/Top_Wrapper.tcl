@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.runs/synth_1/Top.tcl"
+  variable script "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.runs/synth_1/Top_Wrapper.tcl"
   variable category "vivado_synth"
 }
 
@@ -76,44 +76,44 @@ create_project -in_memory -part xc7a100tcsg324-1
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
-set_property webtalk.parent_dir C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.cache/wt [current_project]
-set_property parent.project_path C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.xpr [current_project]
+set_property webtalk.parent_dir C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.cache/wt [current_project]
+set_property parent.project_path C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
-set_property ip_output_repo c:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.cache/ip [current_project]
+set_property ip_output_repo c:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_mem {
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/instruction_memory.mem
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/data_memory.mem
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/instruction_memory.mem
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/data_memory.mem
 }
 read_verilog -library xil_defaultlib {
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/32Bit_Mux4to1.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/32bit_Mux3to1.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/5bitMux3in.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/ALU32Bit.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/BranchingLogic.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/BranchingTarget.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/Controller.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/DataMemory.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/InstructionMemory.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/JumpTarget.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Mux32Bit2To1.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/PCAdder.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/PCSrcStuff.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/ProgramCounter.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/RegisterFile.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/SignExtension.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/Top_Design.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/EX_MEM.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/ID_EX.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/IF_ID.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/MEM_WB.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/ClkDiv.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/SevenSegment.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/Two4DigitDisplay.v
-  C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/Top_Wrapper.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/32Bit_Mux4to1.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/32bit_Mux3to1.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/5bitMux3in.v
+  C:/github/Lab3_ECE369a_FA26/ALU32Bit.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/BranchingLogic.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/BranchingTarget.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/Controller.v
+  C:/github/Lab3_ECE369a_FA26/DataMemory.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/InstructionMemory.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/JumpTarget.v
+  C:/github/Lab3_ECE369a_FA26/Mux32Bit2To1.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/PCAdder.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/PCSrcStuff.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/ProgramCounter.v
+  C:/github/Lab3_ECE369a_FA26/RegisterFile.v
+  C:/github/Lab3_ECE369a_FA26/SignExtension.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/Top_Design.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/EX_MEM.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/ID_EX.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/IF_ID.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/MEM_WB.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/ClkDiv.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/SevenSegment.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/Two4DigitDisplay.v
+  C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/Top_Wrapper.v
 }
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -124,16 +124,16 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Nexyx7DDR_MASTER.xdc
-set_property used_in_implementation false [get_files C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Nexyx7DDR_MASTER.xdc]
+read_xdc C:/github/Lab3_ECE369a_FA26/Lab3-369/Nexyx7DDR_MASTER.xdc
+set_property used_in_implementation false [get_files C:/github/Lab3_ECE369a_FA26/Lab3-369/Nexyx7DDR_MASTER.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
 
-read_checkpoint -auto_incremental -incremental C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/utils_1/imports/synth_1/ALU32Bit_tb.dcp
+read_checkpoint -auto_incremental -incremental C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/utils_1/imports/synth_1/ALU32Bit_tb.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }
-synth_design -top Top -part xc7a100tcsg324-1
+synth_design -top Top_Wrapper -part xc7a100tcsg324-1
 OPTRACE "synth_design" END { }
 if { [get_msg_config -count -severity {CRITICAL WARNING}] > 0 } {
  send_msg_id runtcl-6 info "Synthesis results are not added to the cache due to CRITICAL_WARNING"
@@ -143,10 +143,10 @@ if { [get_msg_config -count -severity {CRITICAL WARNING}] > 0 } {
 OPTRACE "write_checkpoint" START { CHECKPOINT }
 # disable binary constraint mode for synth run checkpoints
 set_param constraints.enableBinaryConstraints false
-write_checkpoint -force -noxdef Top.dcp
+write_checkpoint -force -noxdef Top_Wrapper.dcp
 OPTRACE "write_checkpoint" END { }
 OPTRACE "synth reports" START { REPORT }
-create_report "synth_1_synth_report_utilization_0" "report_utilization -file Top_utilization_synth.rpt -pb Top_utilization_synth.pb"
+create_report "synth_1_synth_report_utilization_0" "report_utilization -file Top_Wrapper_utilization_synth.rpt -pb Top_Wrapper_utilization_synth.pb"
 OPTRACE "synth reports" END { }
 file delete __synthesis_is_running__
 close [open __synthesis_is_complete__ w]
