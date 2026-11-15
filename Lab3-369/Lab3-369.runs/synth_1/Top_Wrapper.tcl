@@ -114,6 +114,7 @@ read_verilog -library xil_defaultlib {
   C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/SevenSegment.v
   C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/Two4DigitDisplay.v
   C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/Top_Wrapper.v
+  {C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/Hazard Detection.v}
 }
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
