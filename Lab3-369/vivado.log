@@ -2,10 +2,10 @@
 # Vivado v2022.2 (64-bit)
 # SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
 # IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
-# Start of session at: Mon Nov  2 00:31:13 2026
-# Process ID: 14196
+# Start of session at: Sun Nov 15 17:47:31 2026
+# Process ID: 11916
 # Current directory: C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369
-# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent15964 C:\Users\smalo\Documents\GitHub\Lab3_ECE369a_FA26\Lab3-369\Lab3-369.xpr
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent2184 C:\Users\smalo\Documents\GitHub\Lab3_ECE369a_FA26\Lab3-369\Lab3-369.xpr
 # Log file: C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/vivado.log
 # Journal file: C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369\vivado.jou
 # Running On: SlimJim, OS: Windows, CPU Frequency: 2611 MHz, CPU Physical cores: 10, Host memory: 16995 MB
@@ -70,15 +70,7 @@ Finished scanning sources
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2022.2/data/ip'.
-open_project: Time (s): cpu = 00:00:22 ; elapsed = 00:00:09 . Memory (MB): peak = 1123.742 ; gain = 181.469
-set_property top Top_Wrapper [current_fileset]
-reset_run synth_1
-INFO: [Project 1-1161] Replacing file C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/utils_1/imports/synth_1/ALU32Bit_tb.dcp with file C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.runs/synth_1/Top.dcp
-launch_runs impl_1 -to_step write_bitstream -jobs 6
-[Mon Nov  2 00:33:56 2026] Launched synth_1...
-Run output will be captured here: C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.runs/synth_1/runme.log
-[Mon Nov  2 00:33:56 2026] Launched impl_1...
-Run output will be captured here: C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.runs/impl_1/runme.log
+open_project: Time (s): cpu = 00:01:54 ; elapsed = 00:00:51 . Memory (MB): peak = 1145.688 ; gain = 207.613
 open_hw_manager
 connect_hw_server -allow_non_jtag
 INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
@@ -102,10 +94,10 @@ INFO: [Labtools 27-2221] Launch Output:
 
 
 
-connect_hw_server: Time (s): cpu = 00:00:02 ; elapsed = 00:00:06 . Memory (MB): peak = 1165.230 ; gain = 0.000
+connect_hw_server: Time (s): cpu = 00:00:03 ; elapsed = 00:00:30 . Memory (MB): peak = 1149.629 ; gain = 3.941
 open_hw_target
 INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/210292AE3908A
-open_hw_target: Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 3336.750 ; gain = 2171.520
+open_hw_target: Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 3316.734 ; gain = 2162.938
 set_property PROGRAM.FILE {C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.runs/impl_1/Top_Wrapper.bit} [get_hw_devices xc7a100t_0]
 current_hw_device [get_hw_devices xc7a100t_0]
 refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7a100t_0] 0]
@@ -124,13 +116,5 @@ program_hw_devices [get_hw_devices xc7a100t_0]
 INFO: [Labtools 27-3164] End of startup status: HIGH
 refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
 INFO: [Labtools 27-1434] Device xc7a100t (JTAG device index = 0) is programmed with a design that has no supported debug core(s) in it.
-set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
-set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
-set_property PROGRAM.FILE {C:/Users/smalo/Documents/GitHub/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.runs/impl_1/Top_Wrapper.bit} [get_hw_devices xc7a100t_0]
-program_hw_devices [get_hw_devices xc7a100t_0]
-INFO: [Labtools 27-3164] End of startup status: HIGH
-refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
-INFO: [Labtools 27-1434] Device xc7a100t (JTAG device index = 0) is programmed with a design that has no supported debug core(s) in it.
-ERROR: [Labtoolstcl 44-513] HW Target shutdown. Closing target: localhost:3121/xilinx_tcf/Digilent/210292AE3908A
 exit
-INFO: [Common 17-206] Exiting Vivado at Mon Nov  2 14:14:20 2026...
+INFO: [Common 17-206] Exiting Vivado at Sun Nov 15 19:13:57 2026...
