@@ -26,11 +26,12 @@
 // location, 0x00000000H).
 ////////////////////////////////////////////////////////////////////////////////
 
-module ProgramCounter(Address, PCResult, Reset, Clk);
+module ProgramCounter(Address, PCResult, Hold, Reset, Clk);
 
 	input Reset, Clk;
 
     input[31:0] Address;
+    input Hold; // PCResult Changes when 1 doesnt change when 0
 	output reg [31:0] PCResult;
 	
 
@@ -47,9 +48,10 @@ module ProgramCounter(Address, PCResult, Reset, Clk);
         if (Reset == 1) begin
             PCResult <= 0;
         end
-        else begin
+        else if (Hold) begin
             PCResult <= Address;
         end
+        //else Hold=0, so nothing updates
         end
 endmodule
 

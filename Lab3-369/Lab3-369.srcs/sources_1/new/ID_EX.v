@@ -26,7 +26,7 @@
 
 module ID_EX #(
     parameter WB_W = 3,    // {RegWrite, MemtoReg[1:0]}
-    parameter M_W  = 7,    // {Branch[2:0], MemRead, MemWrite, MemSize[1:0]}
+    parameter M_W  = 4,    // {Branch[2:0], MemRead, MemWrite, MemSize[1:0]}      // HAZARD UPDATE NOW 4 instead of 7 because branches resolved early
     parameter EX_W = 8     // {RegDst[1:0], ALUSrc, Shift, ALUControl[3:0]}
 )(
     input  Clk, Reset,
@@ -34,12 +34,15 @@ module ID_EX #(
     input  [WB_W-1:0] WB_in,
     input  [M_W-1:0]  M_in,
     input  [EX_W-1:0] EX_in,
+    
     input  [31:0]     PCplus4_in,
     input  [31:0]     ReadData1_in,
     input  [31:0]     ReadData2_in,
     input  [31:0]     Imm_in,        // sign/zero-extended immediate
     input  [4:0]      Rt_in,         // Instruction[20:16]
     input  [4:0]      Rd_in,         // Instruction[15:11]
+    
+    input [4:0]    Rs_in, // HAZARD UPDATE
  
     output reg [WB_W-1:0] WB_out,
     output reg [M_W-1:0]  M_out,
@@ -49,7 +52,8 @@ module ID_EX #(
     output reg [31:0]     ReadData2_out,
     output reg [31:0]     Imm_out,
     output reg [4:0]      Rt_out,
-    output reg [4:0]      Rd_out
+    output reg [4:0]      Rd_out,
+    output reg [4:0]      Rs_out
 );
  
     // Imm_out[5:0] is the funct field and Imm_out[10:6] is shamt, so the
@@ -66,6 +70,7 @@ module ID_EX #(
             Imm_out       <= 32'b0;
             Rt_out        <= 5'b0;
             Rd_out        <= 5'b0;
+            Rs_out  <=  0;
         end else begin
             WB_out        <= WB_in;
             M_out         <= M_in;
@@ -76,6 +81,7 @@ module ID_EX #(
             Imm_out       <= Imm_in;
             Rt_out        <= Rt_in;
             Rd_out        <= Rd_in;
+            Rs_out <= Rs_in;
         end
     end
 endmodule

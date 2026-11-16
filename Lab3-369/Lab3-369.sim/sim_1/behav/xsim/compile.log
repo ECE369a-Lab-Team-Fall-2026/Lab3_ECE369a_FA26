@@ -1,0 +1,66 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/32Bit_Mux4to1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Bit32_Mux4to1
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/32bit_Mux3to1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bit32_Mux3to1
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/5bitMux3in.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bit5Mux3in
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/ALU32Bit.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ALU32Bit
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/BranchingLogic.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module BranchingLogic
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/BranchingTarget.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module BranchingTarget
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/Controller.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Controller
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/DataMemory.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module DataMemory
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/InstructionMemory.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module InstructionMemory
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/JumpTarget.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module JumpTarget
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Mux32Bit2To1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Mux32Bit2To1
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/PCAdder.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module PCAdder
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/PCSrcStuff.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module PCSrcStuff
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/ProgramCounter.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ProgramCounter
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/RegisterFile.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module RegisterFile
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/SignExtension.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module SignExtension
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/Top_Design.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Top
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/EX_MEM.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module EX_MEM
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/ID_EX.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ID_EX
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/IF_ID.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module IF_ID
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/MEM_WB.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module MEM_WB
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/ClkDiv.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ClkDiv
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/SevenSegment.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module SevenSegment
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/Two4DigitDisplay.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Two4DigitDisplay
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/Top_Wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Top_Wrapper
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sources_1/new/Hazard Detection.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Hazard_Detection
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sim_1/new/Controller_tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Controller_tb
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/ALU32Bit_tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ALU32Bit_tb
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/RegisterFile_tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module RegisterFile_tb
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/SignExtension_tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module SignExtension_tb
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Mux32Bit2To1_tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Mux32Bit2To1_tb
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/DataMemory_tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module DataMemory_tb
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/github/Lab3_ECE369a_FA26/Lab3-369/Lab3-369.srcs/sim_1/new/Top_Desing_tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Top_tb

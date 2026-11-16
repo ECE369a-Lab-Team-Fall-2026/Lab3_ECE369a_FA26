@@ -23,14 +23,13 @@
 
 module EX_MEM #(
     parameter WB_W = 3,
-    parameter M_W  = 7
+    parameter M_W  = 4
 )(
     input  Clk, Reset,
  
     input  [WB_W-1:0] WB_in,
     input  [M_W-1:0]  M_in,
-    input  [31:0]     BranchTarget_in,   // output of the branch adder
-    input             Zero_in,
+   
     input  [31:0]     ALUResult_in,
     input  [31:0]     WriteData_in,      // ReadData2 (store data)
     input  [4:0]      WriteReg_in,       // output of the RegDst mux
@@ -38,19 +37,21 @@ module EX_MEM #(
  
     output reg [WB_W-1:0] WB_out,
     output reg [M_W-1:0]  M_out,
-    output reg [31:0]     BranchTarget_out,
+
     output reg            Zero_out,
     output reg [31:0]     ALUResult_out,
     output reg [31:0]     WriteData_out,
     output reg [4:0]      WriteReg_out,
     output reg [31:0]     Link_out
 );
- 
+ ///HAZARD UPDATE
+ //REMOVE BRANCH STUFF HERE, IE BRANCH TARGET STUFF
+ // ALSO REMOVE ZERO IN
     always @(posedge Clk) begin
         if (Reset) begin
             WB_out           <= {WB_W{1'b0}};
             M_out            <= {M_W{1'b0}};
-            BranchTarget_out <= 32'b0;
+
             Zero_out         <= 1'b0;
             ALUResult_out    <= 32'b0;
             WriteData_out    <= 32'b0;
@@ -59,8 +60,7 @@ module EX_MEM #(
         end else begin
             WB_out           <= WB_in;
             M_out            <= M_in;
-            BranchTarget_out <= BranchTarget_in;
-            Zero_out         <= Zero_in;
+
             ALUResult_out    <= ALUResult_in;
             WriteData_out    <= WriteData_in;
             WriteReg_out     <= WriteReg_in;

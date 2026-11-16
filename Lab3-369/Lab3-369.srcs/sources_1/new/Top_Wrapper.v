@@ -49,13 +49,15 @@ module Top_Wrapper(CLK100MHZ, BTND, CA, CB, CC, CD, CE, CF, CG, DP, AN);
     //--------------------------------------------------------------------------
     // Datapath
     //--------------------------------------------------------------------------
-    wire [31:0] PC, WD;
-    Top cpu (
-        .Clk(ClkSlow), .Reset(Reset),
-        .PC_out(PC), .WriteData_out(WD)
-    );
+wire [31:0] PC, WD, PC_WB;
+Top cpu (
+    .Clk(ClkSlow), .Reset(Reset),
+    .PC_out(PC), .WriteData_out(WD),
+    .PC_WB_out(PC_WB)          // PC of the instruction in WB (from Top)
+);
 
-    // PC of the instruction currently in WB = PC delayed by 4 CPU cycles
+// NO DELAY NEXESSARY NOW
+ /*   // PC of the instruction currently in WB = PC delayed by 4 CPU cycles
     reg [31:0] pc_d1 = 32'b0, pc_d2 = 32'b0, pc_d3 = 32'b0, pc_wb = 32'b0;
     always @(posedge ClkSlow) begin
         pc_d1 <= PC;
@@ -63,7 +65,11 @@ module Top_Wrapper(CLK100MHZ, BTND, CA, CB, CC, CD, CE, CF, CG, DP, AN);
         pc_d3 <= pc_d2;
         pc_wb <= pc_d3;
     end
-    wire [31:0] pc_show = ALIGN_PC ? pc_wb : PC;
+   
+    */
+  
+    
+    wire [31:0] pc_show = ALIGN_PC ? PC_WB : PC;
 
     //--------------------------------------------------------------------------
     // Display (runs on the 100 MHz clock; has its own refresh counter)

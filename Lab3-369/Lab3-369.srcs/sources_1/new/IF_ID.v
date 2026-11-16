@@ -22,9 +22,10 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-module IF_ID(Clk, Reset, PCplus4_in, Instruction_in, PCplus4_out, Instruction_out);
+module IF_ID(Clk, Reset,Hold, PCplus4_in, Instruction_in, PCplus4_out, Instruction_out);
  
     input         Clk, Reset;
+    input         Hold;
     input  [31:0] PCplus4_in, Instruction_in;
     output reg [31:0] PCplus4_out, Instruction_out;
  
@@ -32,7 +33,8 @@ module IF_ID(Clk, Reset, PCplus4_in, Instruction_in, PCplus4_out, Instruction_ou
         if (Reset) begin
             PCplus4_out     <= 32'b0;
             Instruction_out <= 32'b0;   // all zeros = sll $0,$0,0 = nop
-        end else begin
+        end 
+        else if (Hold) begin
             PCplus4_out     <= PCplus4_in;
             Instruction_out <= Instruction_in;
         end

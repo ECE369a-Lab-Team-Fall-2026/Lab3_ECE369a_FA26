@@ -27,12 +27,12 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-module Top(Clk, Reset, PC_out, WriteData_out);
- 
+module Top(Clk, Reset, PC_out, WriteData_out, PC_WB_out);
+
     input         Clk, Reset;
     output [31:0] PC_out;
     output [31:0] WriteData_out;
- 
+    output [31:0] PC_WB_out;
     //==========================================================================
     // Wires
     //==========================================================================
@@ -58,7 +58,7 @@ module Top(Clk, Reset, PC_out, WriteData_out);
  
     // ID/EX outputs (EX)
     wire [2:0]  WB_EX;
-    wire [6:0]  M_EX;
+    wire [3:0]  M_EX;
     wire [7:0]  EX_EX;
     wire [31:0] PCplus4_EX, ReadData1_EX, ReadData2_EX, Imm_EX;
     wire [4:0]  Rt_EX, Rd_EX;
@@ -66,22 +66,22 @@ module Top(Clk, Reset, PC_out, WriteData_out);
     wire        ALUSrc_EX   = EX_EX[5];
     wire        Shift_EX    = EX_EX[4];
     wire [3:0]  ALUControl_EX = EX_EX[3:0];
-    wire [31:0] ALU_A, ALU_B, ALUResult_EX, BranchTarget_EX, Link_EX;
+    wire [31:0] ALU_A, ALU_B, ALUResult_EX, Link_EX;
     wire        Zero_EX;
     wire [4:0]  WriteReg_EX;
  
     // EX/MEM outputs (MEM)
     wire [2:0]  WB_MEM;
-    wire [6:0]  M_MEM;
-    wire [31:0] BranchTarget_MEM, ALUResult_MEM, StoreData_MEM, Link_MEM;
-    wire        Zero_MEM;
+    wire [3:0]  M_MEM;
+    wire [31:0]  ALUResult_MEM, StoreData_MEM, Link_MEM;
+
     wire [4:0]  WriteReg_MEM;
-    wire [2:0]  Branch_MEM   = M_MEM[6:4];
+
     wire        MemRead_MEM  = M_MEM[3];
     wire        MemWrite_MEM = M_MEM[2];
     wire [1:0]  MemSize_MEM  = M_MEM[1:0];
     wire [31:0] ReadData_MEM;
-    wire        BranchTaken;
+
     wire [1:0]  PCSrc;
  
     // MEM/WB outputs (WB)
@@ -90,6 +90,21 @@ module Top(Clk, Reset, PC_out, WriteData_out);
     wire [4:0]  WriteReg_WB;
     wire        RegWrite_WB  = WB_WB[2];
     wire [1:0]  MemtoReg_WB  = WB_WB[1:0];
+    ///////////////////////////////////////////////
+    //HAZARD UPDATE
+    
+    wire UsesRs, UsesRt;
+    wire PCWrite;
+    wire Stall;
+    wire IFID_Write;
+    
+    ////////////BRANCH LOGIC UPDATE
+wire isEqBr  = (opcode == 6'b000100) || (opcode == 6'b000101);   // beq, bne
+wire Zero_ID = (ReadData1_ID == (isEqBr ? ReadData2_ID : 32'b0));
+
+wire        BranchTaken_ID;
+wire [31:0] BranchTarget_ID;
+    
  
     //==========================================================================
     // IF stage
@@ -98,14 +113,14 @@ module Top(Clk, Reset, PC_out, WriteData_out);
     Bit32_Mux4to1 nextpc_mux (
         .out(NextPC),
         .in0(PCplus4_IF),
-        .in1(BranchTarget_MEM),
+        .in1(BranchTarget_ID),
         .in2(JumpTarget_ID),
         .in3(ReadData1_ID),
         .sel(PCSrc)
     );
  
     ProgramCounter pc_reg (
-        .Address(NextPC), .PCResult(PC), .Reset(Reset), .Clk(Clk)
+        .Address(NextPC), .PCResult(PC), .Hold(PCWrite), .Reset(Reset), .Clk(Clk)
     );
  
     PCAdder pc_adder (.PCResult(PC), .PCAddResult(PCplus4_IF));
@@ -113,7 +128,7 @@ module Top(Clk, Reset, PC_out, WriteData_out);
     InstructionMemory imem (.Address(PC), .Instruction(Instr_IF));
  
     IF_ID if_id (
-        .Clk(Clk), .Reset(Reset),
+        .Clk(Clk), .Reset(Reset), .Hold(IFID_Write),
         .PCplus4_in(PCplus4_IF),   .Instruction_in(Instr_IF),
         .PCplus4_out(PCplus4_ID),  .Instruction_out(Instr_ID)
     );
@@ -127,8 +142,18 @@ module Top(Clk, Reset, PC_out, WriteData_out);
         .Shift(Shift_ID), .ALUControl(ALUControl_ID), .SignExt(SignExt_ID),
         .MemRead(MemRead_ID), .MemWrite(MemWrite_ID), .MemSize(MemSize_ID),
         .MemtoReg(MemtoReg_ID), .Branch(Branch_ID),
-        .Jump(Jump_ID), .JumpReg(JumpReg_ID)
+        .Jump(Jump_ID), .JumpReg(JumpReg_ID), .UsesRs(UsesRs), .UsesRt(UsesRt)
     );
+ //HAZARD UPDATE IN ID
+Hazard_Detection hdu (
+    .UsesRs(UsesRs), .UsesRt(UsesRt),
+    .rs(rs), .rt(rt),
+    .RegWrite_EX(WB_EX[2]),    .WriteReg_EX(WriteReg_EX),
+    .RegWrite_MEM(WB_MEM[2]),  .WriteReg_MEM(WriteReg_MEM),
+    .RegWrite_WB(RegWrite_WB), .WriteReg_WB(WriteReg_WB),
+    .PCWrite(PCWrite), .IFID_Write(IFID_Write), .Stalling(Stall)
+);
+ 
  
     RegisterFile regfile (
         .ReadRegister1(rs), .ReadRegister2(rt),
@@ -140,6 +165,20 @@ module Top(Clk, Reset, PC_out, WriteData_out);
     SignExtension signext (
         .in(Instr_ID[15:0]), .SignExt(SignExt_ID), .out(Imm_ID)
     );
+    /////////////////HAZARD DETECTION UPDATE
+
+
+BranchingLogic branch_logic (
+    .Branch(Branch_ID), .Zero(Zero_ID), .Sign(ReadData1_ID[31]),
+    .BranchTaken(BranchTaken_ID)
+);
+
+BranchingTarget branch_target (
+    .PCPlus4(PCplus4_ID), .SignExtImm(Imm_ID), .Target(BranchTarget_ID)
+);
+    
+    
+    
  
     JumpTarget jump_target (
         .PCPlus4(PCplus4_ID), .Instr26(Instr_ID[25:0]), .Target(JumpTarget_ID)
@@ -147,14 +186,14 @@ module Top(Clk, Reset, PC_out, WriteData_out);
  
     // BranchTaken comes from MEM (older instruction), Jump/JumpReg from ID
     PCSrcStuff pcsrc_logic (
-        .BranchTaken(BranchTaken), .Jump(Jump_ID), .JumpReg(JumpReg_ID),
+        .BranchTaken(BranchTaken_ID), .Jump(Jump_ID), .JumpReg(JumpReg_ID),
         .PCSrc(PCSrc)
     );
  
-    ID_EX #(.WB_W(3), .M_W(7), .EX_W(8)) id_ex (
+    ID_EX #(.WB_W(3), .M_W(4), .EX_W(8)) id_ex (
         .Clk(Clk), .Reset(Reset),
-        .WB_in({RegWrite_ID, MemtoReg_ID}),
-        .M_in({Branch_ID, MemRead_ID, MemWrite_ID, MemSize_ID}),
+        .WB_in(Stall ? 3'b000 :{RegWrite_ID, MemtoReg_ID}),   // Stall ? 3'b000 is
+        .M_in(Stall ? 4'b0000 :{MemRead_ID, MemWrite_ID, MemSize_ID}),
         .EX_in({RegDst_ID, ALUSrc_ID, Shift_ID, ALUControl_ID}),
         .PCplus4_in(PCplus4_ID),
         .ReadData1_in(ReadData1_ID), .ReadData2_in(ReadData2_ID),
@@ -187,21 +226,19 @@ module Top(Clk, Reset, PC_out, WriteData_out);
         .out(WriteReg_EX), .in0(Rt_EX), .in1(Rd_EX), .in2(5'd31), .sel(RegDst_EX)
     );
  
-    BranchingTarget branch_target (
-        .PCPlus4(PCplus4_EX), .SignExtImm(Imm_EX), .Target(BranchTarget_EX)
-    );
+
  
     // jal writes PC+8 (one delay-slot instruction follows the jump)
     assign Link_EX = PCplus4_EX + 32'd4;
  
-    EX_MEM #(.WB_W(3), .M_W(7)) ex_mem (
+    EX_MEM #(.WB_W(3), .M_W(4)) ex_mem (
         .Clk(Clk), .Reset(Reset),
         .WB_in(WB_EX), .M_in(M_EX),
-        .BranchTarget_in(BranchTarget_EX), .Zero_in(Zero_EX),
+       
         .ALUResult_in(ALUResult_EX), .WriteData_in(ReadData2_EX),
         .WriteReg_in(WriteReg_EX), .Link_in(Link_EX),
         .WB_out(WB_MEM), .M_out(M_MEM),
-        .BranchTarget_out(BranchTarget_MEM), .Zero_out(Zero_MEM),
+
         .ALUResult_out(ALUResult_MEM), .WriteData_out(StoreData_MEM),
         .WriteReg_out(WriteReg_MEM), .Link_out(Link_MEM)
     );
@@ -216,10 +253,7 @@ module Top(Clk, Reset, PC_out, WriteData_out);
     );
  
     // Sign = ALUResult[31]; branches use PASSA so ALUResult is the rs value
-    BranchingLogic branch_logic (
-        .Branch(Branch_MEM), .Zero(Zero_MEM), .Sign(ALUResult_MEM[31]),
-        .BranchTaken(BranchTaken)
-    );
+
  
     MEM_WB #(.WB_W(3)) mem_wb (
         .Clk(Clk), .Reset(Reset),
@@ -243,7 +277,26 @@ module Top(Clk, Reset, PC_out, WriteData_out);
     //==========================================================================
     // Demo outputs
     //==========================================================================
-    assign PC_out        = PC;
-    assign WriteData_out = WriteData_WB;
- 
+wire [31:0] PC_ID  = PCplus4_ID - 32'd4;
+wire [31:0] WD_now = RegWrite_WB ? WriteData_WB : 32'b0;   // declared before use
+reg  [31:0] PC_EX_r, PC_MEM_r, PC_WB_r, PC_last, WD_last;
+reg         V_EX_r, V_MEM_r, V_WB_r;                       // valid bits
+
+always @(posedge Clk) begin
+    if (Reset) begin
+        {PC_EX_r, PC_MEM_r, PC_WB_r, PC_last, WD_last} <= 0;
+        {V_EX_r, V_MEM_r, V_WB_r} <= 0;
+    end else begin
+        PC_EX_r  <= PC_ID;    V_EX_r  <= ~Stall;
+        PC_MEM_r <= PC_EX_r;  V_MEM_r <= V_EX_r;
+        PC_WB_r  <= PC_MEM_r; V_WB_r  <= V_MEM_r;
+        if (V_WB_r) begin PC_last <= PC_WB_r; WD_last <= WD_now; end
+    end
+end
+
+assign PC_out        = PC;
+assign PC_WB_out     = V_WB_r ? PC_WB_r : PC_last;
+assign WriteData_out = V_WB_r ? WD_now  : WD_last;
+
+
 endmodule

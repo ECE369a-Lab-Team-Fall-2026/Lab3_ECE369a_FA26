@@ -1,0 +1,92 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+----------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Sun Nov 15 19:03:26 2026
+| Host         : Aidans-PC running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file Top_Wrapper_control_sets_placed.rpt
+| Design       : Top_Wrapper
+| Device       : xc7a100t
+----------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    14 |
+|    Minimum number of control sets                        |    14 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    26 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    14 |
+| >= 0 to < 4        |     1 |
+| >= 4 to < 6        |     0 |
+| >= 6 to < 8        |     0 |
+| >= 8 to < 10       |     0 |
+| >= 10 to < 12      |     0 |
+| >= 12 to < 14      |     0 |
+| >= 14 to < 16      |     0 |
+| >= 16              |    13 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |              21 |            6 |
+| No           | No                    | Yes                    |               2 |            1 |
+| No           | Yes                   | No                     |             323 |          124 |
+| Yes          | No                    | No                     |               0 |            0 |
+| Yes          | No                    | Yes                    |              17 |            7 |
+| Yes          | Yes                   | No                     |              67 |           25 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++----------------------+------------------------------------+--------------------------+------------------+----------------+--------------+
+|     Clock Signal     |            Enable Signal           |     Set/Reset Signal     | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------------+------------------------------------+--------------------------+------------------+----------------+--------------+
+|  ClkSlow_BUFG        |                                    | BTND_IBUF                |                1 |              2 |         2.00 |
+|  CLK100MHZ_IBUF_BUFG |                                    |                          |                6 |             21 |         3.50 |
+|  CLK100MHZ_IBUF_BUFG |                                    | clkdiv/DivCnt[0]_i_1_n_0 |                7 |             26 |         3.71 |
+|  ClkSlow_BUFG        | cpu/V_WB_r                         | cpu/id_ex/Reset          |               10 |             32 |         3.20 |
+|  ClkSlow_BUFG        | cpu/ex_mem/ALUResult_out_reg[10]_0 |                          |                8 |             32 |         4.00 |
+|  ClkSlow_BUFG        | cpu/ex_mem/ALUResult_out_reg[11]_0 |                          |                8 |             32 |         4.00 |
+|  ClkSlow_BUFG        | cpu/ex_mem/M_out_reg[2]_4          |                          |                8 |             32 |         4.00 |
+|  ClkSlow_BUFG        | cpu/ex_mem/M_out_reg[2]_5          |                          |                8 |             32 |         4.00 |
+|  ClkSlow_BUFG        | cpu/mem_wb/E[0]                    | cpu/id_ex/Reset          |               22 |             52 |         2.36 |
+|  ClkSlow_BUFG        | cpu/ex_mem/M_out_reg[2]_1          |                          |               24 |             96 |         4.00 |
+|  ClkSlow_BUFG        | cpu/ex_mem/M_out_reg[2]_3          |                          |               24 |             96 |         4.00 |
+|  ClkSlow_BUFG        | cpu/ex_mem/M_out_reg[2]_0          |                          |               24 |             96 |         4.00 |
+|  ClkSlow_BUFG        | cpu/ex_mem/M_out_reg[2]_2          |                          |               24 |             96 |         4.00 |
+|  ClkSlow_BUFG        |                                    | cpu/id_ex/Reset          |              117 |            297 |         2.54 |
++----------------------+------------------------------------+--------------------------+------------------+----------------+--------------+
+
+

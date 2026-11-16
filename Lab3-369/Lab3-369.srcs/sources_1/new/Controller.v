@@ -54,7 +54,13 @@ module Controller(
     ////////I dont know//////////////////////////////////////////////////////////////////////////
     output reg [2:0] Branch,      // 000=none  001=beq  010= bne 011=bgez 100=bgtz  101=blez 110=bltz
     output reg       Jump,        // jump    j or jal
-    output reg       JumpReg      // jr  
+    output reg       JumpReg ,     // jr  
+    
+        ///////HAZARD DETECTION UPDATE
+    output           UsesRs,    // 1 = this instruction reads rs (0 for j, jal, sll, srl)
+    output           UsesRt     // 1 = this instruction reads rt (R-type except jr, mul, beq, bne, stores)
+    
+    
 );
     
     
@@ -121,7 +127,19 @@ module Controller(
     localparam BR_BLEZ = 3'b101;   // Branch <= zero
     localparam BR_BLTZ = 3'b110;   // Branch < zero
     
-    
+    //////MORE HAZARD UPDATE////////
+// sll and srl take their input from rt and the shamt field, so rs is unused
+    wire isShift = (opcode == OP_RTYPE) && (funct == F_SLL || funct == F_SRL);
+
+// rs is read by everything except j, jal, and the shifts
+    assign UsesRs = ~((opcode == OP_J) || (opcode == OP_JAL) || isShift);
+
+// rt is read by: R-type (except jr), mul, beq, bne, and stores
+    assign UsesRt = ((opcode == OP_RTYPE) && (funct != F_JR)) ||
+                    (opcode == OP_SPECIAL) ||
+                    (opcode == OP_BEQ) || (opcode == OP_BNE) ||
+                    (opcode == OP_SW)  || (opcode == OP_SH) || (opcode == OP_SB);
+    // TOP sends Uses RS and UsesRT to Hazard Controls
     
  always @(*) begin
         // 1. Defaults for EVERY output (prevents latches)
